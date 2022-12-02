@@ -18,6 +18,14 @@ public interface Contract {
         void userCardClickListener(Context context);
         void loginBtnUserClickListener(Context context);
         void signUpClickListener(Context context);
+        void loginNurseClickListener(Context context);
+
+        interface PresenterSignUp  {
+
+            void signUpClickListener(Context context);
+
+
+        }
     }
 
 }

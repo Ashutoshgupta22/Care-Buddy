@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.view;
+package com.aspark.carebuddy.view.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
