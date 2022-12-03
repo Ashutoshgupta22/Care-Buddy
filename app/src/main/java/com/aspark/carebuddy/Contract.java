@@ -1,6 +1,8 @@
 package com.aspark.carebuddy;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Icon;
 
 public interface Contract {
 
@@ -23,6 +25,7 @@ public interface Contract {
         interface PresenterSignUp  {
 
             void signUpClickListener(Context context);
+
 
 
         }
