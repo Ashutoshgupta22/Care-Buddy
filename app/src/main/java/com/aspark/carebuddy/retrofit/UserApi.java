@@ -9,7 +9,10 @@ import retrofit2.http.POST;
 
 public interface UserApi {
 
-    @POST("/user/save")
-    Call<UserModel> saveUser(@Body UserModel user);
+//    @POST("/user/save")
+//    Call<UserModel> saveUser(@Body UserModel user);
+
+    @POST("/user/signup")
+    Call<UserModel> registerUser(@Body UserModel user);
 
 }

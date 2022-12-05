@@ -1,6 +1,7 @@
 package com.aspark.carebuddy;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -9,6 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import com.aspark.carebuddy.presenter.SignUpPresenter;
+import com.aspark.carebuddy.view.user.SignUpUserActivity;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,6 +25,10 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.aspark.carebuddy", appContext.getPackageName());
+      //  assertEquals("com.aspark.carebuddy", appContext.getPackageName());
+
+
+//        Contract.Presenter.PresenterSignUp presenter = new SignUpPresenter();
+//        presenter.signUpClickListener(appContext.getApplicationContext());
     }
 }
