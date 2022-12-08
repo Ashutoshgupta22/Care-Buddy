@@ -12,7 +12,7 @@ public interface UserApi {
 //    @POST("/user/save")
 //    Call<UserModel> saveUser(@Body UserModel user);
 
-    @POST("/user/signup")
+    @POST("/api/user/registration")
     Call<UserModel> registerUser(@Body UserModel user);
 
 }
