@@ -1,8 +1,11 @@
 package com.aspark.carebuddy.view.user;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -29,6 +32,7 @@ public class SignUpUserActivity extends AppCompatActivity {
     Button signUpBtn;
     String sName, sAge, sEmail,sPassword, sConfirmPassword;
     boolean validInput=true;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +59,40 @@ public class SignUpUserActivity extends AppCompatActivity {
             sConfirmPassword = confirmPasswordEditText.getText().toString().trim();
 
             validInput = true;
-            if (verifyInput()) {
+            if (verifyInput(sName,sAge,sEmail,sPassword,sConfirmPassword)) {
 
                 UserModel user = new UserModel();
                 user.setName(sName);
                 user.setAge(Integer.parseInt(sAge));
+                user.setEmail(sEmail);
+                user.setPassword(sPassword);
 
-                callSaveApi(user,userApi);
+                registerUserApi(user,userApi);
+                context = this;
 
-               Contract.Presenter.PresenterSignUp presenter = new SignUpPresenter();
-               presenter.signUpClickListener(this);
+
            }
         });
 
     }
 
-    private void callSaveApi(UserModel user, UserApi userApi) {
+    private void registerUserApi(UserModel user, UserApi userApi) {
 
-        userApi.saveUser(user)
+        Log.w("SignUpUserActivity", "registerUserApi: "+user.getEmail() );
+
+        userApi.registerUser(user)
                 .enqueue(new Callback<UserModel>() {
                     @Override
-                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                        Toast.makeText(SignUpUserActivity.this, "Save successful!", Toast.LENGTH_SHORT).show();
+                    public void onResponse( Call<UserModel> call,  Response<UserModel> response) {
+
+                        if (response.isSuccessful()) {
+                            Toast.makeText(SignUpUserActivity.this, "Save successful!", Toast.LENGTH_SHORT).show();
+
+                            Contract.Presenter.PresenterSignUp presenter = new SignUpPresenter();
+                            presenter.signUpClickListener(context);
+                        }
+                        else
+                            Toast.makeText(SignUpUserActivity.this, "Response Code= "+response.code(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -89,7 +105,7 @@ public class SignUpUserActivity extends AppCompatActivity {
 
     }
 
-    private boolean verifyInput() {
+    private boolean verifyInput(String sName,String sAge,String sEmail, String sPassword, String sConfirmPassword) {
 
         if (sName.equals("")) {
             nameEditText.setError("Name can not be empty");

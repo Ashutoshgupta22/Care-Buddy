@@ -6,7 +6,36 @@ public class UserModel {
     private String name;
     private int age;
     private String location;
+    private String email;
+    private String password;
 
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", location='" + location + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public int getId() {
         return id;
@@ -31,10 +60,6 @@ public class UserModel {
     }
     public void setLocation(String location) {
         this.location = location;
-    }
-    @Override
-    public String toString() {
-        return "Elder [id=" + id + ", name=" + name + ", age=" + age + ", location=" + location + "]";
     }
 
 }
