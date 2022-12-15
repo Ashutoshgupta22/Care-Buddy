@@ -8,7 +8,6 @@ import com.aspark.carebuddy.Contract;
 import com.aspark.carebuddy.view.nurse.NurseHomeActivity;
 import com.aspark.carebuddy.view.nurse.NurseLoginActivity;
 import com.aspark.carebuddy.view.user.SignUpUserActivity;
-import com.aspark.carebuddy.view.user.UserHomeActivity;
 import com.aspark.carebuddy.view.user.UserLoginActivity;
 
 public class LoginPresenter implements Contract.Presenter {
@@ -32,15 +31,7 @@ public class LoginPresenter implements Contract.Presenter {
     }
 
     @Override
-    public void loginBtnUserClickListener(Context context) {
-
-        Intent intent = new Intent(context.getApplicationContext(), UserHomeActivity.class);
-        context.startActivity(intent);
-        ((Activity)context).finish();
-    }
-
-    @Override
-    public void signUpClickListener(Context context) {
+    public void signUpBtnClickListener(Context context) {
 
         Intent intent = new Intent(context.getApplicationContext(), SignUpUserActivity.class);
         context.startActivity(intent);

@@ -1,29 +1,18 @@
 package com.aspark.carebuddy.view.user;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.aspark.carebuddy.Contract;
 import com.aspark.carebuddy.R;
 import com.aspark.carebuddy.model.UserModel;
 import com.aspark.carebuddy.presenter.SignUpPresenter;
-import com.aspark.carebuddy.retrofit.RetrofitService;
-import com.aspark.carebuddy.retrofit.UserApi;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignUpUserActivity extends AppCompatActivity {
 
@@ -47,9 +36,6 @@ public class SignUpUserActivity extends AppCompatActivity {
         genderSpinner = findViewById(R.id.userSignUpGender);
         signUpBtn =findViewById(R.id.userSignUpBtn);
 
-        RetrofitService retrofitService = new RetrofitService();
-        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
-
         signUpBtn.setOnClickListener(view -> {
 
             sName = nameEditText.getText().toString().trim();
@@ -67,44 +53,12 @@ public class SignUpUserActivity extends AppCompatActivity {
                 user.setEmail(sEmail);
                 user.setPassword(sPassword);
 
-                registerUserApi(user,userApi);
                 context = this;
-
-
-           }
+                Contract.Presenter.PresenterSignUp presenterSignUp = new SignUpPresenter();
+                presenterSignUp.signUpClickListener(context,user);
+            }
         });
-
     }
-
-    private void registerUserApi(UserModel user, UserApi userApi) {
-
-        Log.w("SignUpUserActivity", "registerUserApi: "+user.getEmail() );
-
-        userApi.registerUser(user)
-                .enqueue(new Callback<UserModel>() {
-                    @Override
-                    public void onResponse( Call<UserModel> call,  Response<UserModel> response) {
-
-                        if (response.isSuccessful()) {
-                            Toast.makeText(SignUpUserActivity.this, "Save successful!", Toast.LENGTH_SHORT).show();
-
-                            Contract.Presenter.PresenterSignUp presenter = new SignUpPresenter();
-                            presenter.signUpClickListener(context);
-                        }
-                        else
-                            Toast.makeText(SignUpUserActivity.this, "Response Code= "+response.code(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserModel> call, Throwable t) {
-                        Toast.makeText(SignUpUserActivity.this, "Save Failed!!", Toast.LENGTH_LONG).show();
-                        Logger.getLogger(SignUpUserActivity.class.getName()).log(Level.SEVERE,"Error Occurred",t);
-
-                    }
-                });
-
-    }
-
     private boolean verifyInput(String sName,String sAge,String sEmail, String sPassword, String sConfirmPassword) {
 
         if (sName.equals("")) {

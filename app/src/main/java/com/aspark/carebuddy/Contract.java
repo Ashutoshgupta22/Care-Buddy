@@ -1,8 +1,8 @@
 package com.aspark.carebuddy;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Icon;
+
+import com.aspark.carebuddy.model.UserModel;
 
 public interface Contract {
 
@@ -12,22 +12,26 @@ public interface Contract {
 
     interface View {
 
+         interface UserLoginView {
+             void showUserLoginError(String Message);
+             void hideUserLoginError();
+         }
     }
 
     interface Presenter {
 
         void nurseCardClickListener(Context context);
         void userCardClickListener(Context context);
-        void loginBtnUserClickListener(Context context);
-        void signUpClickListener(Context context);
+        void signUpBtnClickListener(Context context);
         void loginNurseClickListener(Context context);
 
         interface PresenterSignUp  {
 
-            void signUpClickListener(Context context);
+            void signUpClickListener(Context context,UserModel user);
+        }
+        interface PresenterUserLogin {
 
-
-
+            void userLoginClickListener(Context context, String sEmail, String sPassword);
         }
     }
 
