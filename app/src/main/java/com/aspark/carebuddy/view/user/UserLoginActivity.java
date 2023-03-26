@@ -40,7 +40,7 @@ public class UserLoginActivity extends AppCompatActivity implements Contract.Vie
 
         if (getIntent().getStringExtra("emailSent") !=null) {
             loginErrorTextView.setTextColor(Color.GRAY);
-            loginErrorTextView.setText("Verification email sent successfully");
+            loginErrorTextView.setText(R.string.email_verified_success);
             loginErrorCard.setVisibility(View.VISIBLE);
            // showUserLoginError("Verification email sent successfully");
 

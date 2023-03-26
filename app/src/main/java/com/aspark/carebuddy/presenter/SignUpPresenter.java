@@ -28,7 +28,6 @@ public class SignUpPresenter implements Contract.Presenter.PresenterSignUp {
 
     Context context;
 
-
     @Override
     public void signUpClickListener(Context context, UserModel user) {
 

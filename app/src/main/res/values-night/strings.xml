@@ -7,4 +7,8 @@
     <string name="signup">SignUp</string>
     <string name="login">Login</string>
     <string name="new_user_signup">New User?SignUp</string>
+    <string name="confirm_your_location">Confirm your location</string>
+    <string name="choose_a_location">Choose a location</string>
+    <string name="email_verified_success">Verification email sent successfully</string>
+    <string name="google_maps_key">AIzaSyBF8R01nyNG1YbsrDqIrgSL-48uXtxjfSE</string>
 </resources>
