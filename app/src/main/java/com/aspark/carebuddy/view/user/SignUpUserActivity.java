@@ -47,7 +47,7 @@ public class SignUpUserActivity extends AppCompatActivity {
             validInput = true;
             if (verifyInput(sName,sAge,sEmail,sPassword,sConfirmPassword)) {
 
-                UserModel user = new UserModel();
+                UserModel user = UserModel.getCurrentUser();
                 user.setName(sName);
                 user.setAge(Integer.parseInt(sAge));
                 user.setEmail(sEmail);
