@@ -40,13 +40,17 @@ public class MapPresenter implements Contract.Presenter.PresenterMap {
     }
 
     @Override
-    public void confirmLocationClickListener(Context context, double latitude, double longitude) {
+    public void confirmLocationClickListener(Context context,Location location, String pincode) {
 
         Log.i("MapPresenter", "confirmLocationClickListener: called");
-        saveLocation(context,latitude,longitude);
+
+        if (location != null && pincode != null)
+            saveLocation(context,location.getLatitude(),location.getLongitude(),pincode);
+        else
+            Log.e("MapPresenter", "confirmLocationClickListener: pincode: "+pincode );
     }
 
-    private void saveLocation(Context context,double latitude, double longitude) {
+    private void saveLocation(Context context,double latitude, double longitude, String pincode) {
 
         RetrofitService retrofitService = new RetrofitService();
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
@@ -54,6 +58,7 @@ public class MapPresenter implements Contract.Presenter.PresenterMap {
         LocationData locationData =  new LocationData();
         locationData.setLatitude(latitude);
         locationData.setLongitude(longitude);
+        locationData.setPincode(pincode);
 
         Log.i("MapPresenter", "saveLocation: getCurrentUser "+ getCurrentUser().getEmail());
         locationData.setUsername(getCurrentUser().getEmail());
@@ -65,8 +70,7 @@ public class MapPresenter implements Contract.Presenter.PresenterMap {
 
                         //TODO showing response successful when currentUser is null.
 
-                        if (response.isSuccessful()) {
-
+                        if (response.isSuccessful() && response.body().booleanValue()) {
 
                             Log.i("MapPresenter", "onResponse: saveLocation Successful");
 

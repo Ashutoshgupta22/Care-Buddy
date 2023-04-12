@@ -5,6 +5,15 @@ public class LocationData {
     private double latitude;
     private double longitude;
     private String username;
+    private String pincode;
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
 
     public String getUsername() {
         return username;

@@ -34,6 +34,7 @@ public class MapActivity extends AppCompatActivity implements Contract.View.MapV
 
     MapLayoutBinding binding;
     LatLng nowLatLng;
+    private String pincode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,12 +138,12 @@ public class MapActivity extends AppCompatActivity implements Contract.View.MapV
                 location.setLatitude(nowLatLng.latitude);
                 location.setLongitude(nowLatLng.longitude);
 
+
                 Log.d("MapActivity", "showGoogleMaps: saved location= " +
                         location.getLatitude() + " " + location.getLongitude());
 
               Contract.Presenter.PresenterMap presenterMap = new MapPresenter();
-              presenterMap.confirmLocationClickListener(this,
-                      location.getLatitude(),location.getLongitude());
+              presenterMap.confirmLocationClickListener(this, location,pincode);
 
             }
             else {
@@ -171,7 +172,10 @@ public class MapActivity extends AppCompatActivity implements Contract.View.MapV
         if (addresses != null && !addresses.isEmpty()) {
 
             String address = addresses.get(0).getAddressLine(0);
+            pincode = addresses.get(0).getPostalCode();
+
             Log.d("TAG", "getAddressText() returned: " + address );
+            Log.d("TAG", "Pincode " + pincode );
 
             binding.addressView.setText(address);
         }

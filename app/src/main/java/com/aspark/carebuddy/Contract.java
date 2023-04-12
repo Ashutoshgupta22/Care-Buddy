@@ -47,7 +47,7 @@ public interface Contract {
         interface PresenterMap {
 
             void getLastLocation(Context context,Contract.View.MapView mapView,Bundle savedInstanceState);
-            void confirmLocationClickListener(Context context,double latitude, double longitude);
+            void confirmLocationClickListener(Context context,Location location, String pincode);
         }
 
         interface PresenterUserHome{
