@@ -1,5 +1,6 @@
 package com.aspark.carebuddy.retrofit;
 
+import com.aspark.carebuddy.model.NurseModel;
 import com.aspark.carebuddy.model.UserModel;
 
 import java.util.Map;
@@ -21,10 +22,10 @@ public interface UserApi {
     @POST("/api/user/save-location")
     Call<Boolean> saveLocation(@Body LocationData locationData);
 
-    @GET("/api/user/{email}")
+    @GET("/api/user/get-user/{email}")
     Call<Map<String,Object>> getUserData(@Path(value = "email") String email);
 
-    @GET("/api/user/{email}/book-service")
-    Call<UserModel> bookService(@Path(value = "email") String email);
+    @POST("/api/user/book-service")
+    Call<NurseModel> bookService(@Body BookServiceRequest request);
 
 }
