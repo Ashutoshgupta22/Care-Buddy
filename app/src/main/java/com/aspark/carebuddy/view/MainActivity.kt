@@ -1,64 +1,96 @@
-package com.aspark.carebuddy.view;
+package com.aspark.carebuddy.view
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.aspark.carebuddy.MainViewModel
+import com.aspark.carebuddy.databinding.ActivityMainBinding
+import com.aspark.carebuddy.login.NurseLoginActivity
+import com.aspark.carebuddy.login.UserLoginActivity
+import com.aspark.carebuddy.model.Nurse.Companion.currentNurse
+import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.view.nurse.NurseHomeActivity
+import com.aspark.carebuddy.view.user.UserHomeActivity
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+class MainActivity : AppCompatActivity() {
 
-import com.aspark.carebuddy.Contract;
-import com.aspark.carebuddy.R;
-import com.aspark.carebuddy.model.UserModel;
-import com.aspark.carebuddy.presenter.LoginPresenter;
-import com.aspark.carebuddy.presenter.UserLoginPresenter;
-import com.google.android.material.card.MaterialCardView;
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
-public class MainActivity extends AppCompatActivity implements Contract.View{
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    MaterialCardView cardView_nurse, cardView_user;
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val isUserSignedIn = preferences.getBoolean("isUserSignedIn", false)
+        val isNurseSignedIn = preferences.getBoolean("isNurseSignedIn", false)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        //TODO to get all the user data send userEmail to backend and get user object in return
 
-        SharedPreferences preferences = getSharedPreferences(getPackageName(),MODE_PRIVATE);
-        boolean isSignedIn = preferences.getBoolean("isSignedIn", false);
-        String username = preferences.getString("username",null);
+        if (isUserSignedIn) {
 
-        //TODO to get all the user data send username to backend and get user object in return
-        Log.d("MainActivity", "onCreate: currentUser: "+username);
-        Log.i("MainActivity", "check isSignedIn "+isSignedIn);
+            val userEmail = preferences.getString("userEmail", null)
+            Log.d("MainActivity", "onCreate: currentUser: $userEmail")
 
-        if (isSignedIn) {
+            User.currentUser.email = userEmail
+            viewModel.callUserHomeActivity()
 
-            UserModel.getCurrentUser().setEmail(username);
-            Contract.Presenter.PresenterUserLogin presenterUserLogin = new UserLoginPresenter();
-            presenterUserLogin.userSignedInLogin(this);
+        } else if (isNurseSignedIn) {
+
+            val nurseEmail = preferences.getString("nurseEmail", null)
+            Log.d("MainActivity", "onCreate: currentNurse: $nurseEmail")
+            currentNurse.email = nurseEmail!!
+            viewModel.callNurseHomeActivity()
         }
 
-        setContentView(R.layout.activity_main);
+        viewModel.startUserHomeActivity.observe(this){
 
-        cardView_nurse = findViewById(R.id.nurseCard);
-        cardView_user = findViewById(R.id.userCard);
+            it?.let {
+                val intent = Intent(this,UserHomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
-        cardView_nurse.setOnClickListener(view -> {
+        viewModel.startNurseHomeActivity.observe(this){
 
-            Contract.Presenter presenter = new LoginPresenter();
-            presenter.nurseCardClickListener(this);
-        });
+            it?.let {
+                val intent = Intent(this,NurseHomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
-        cardView_user.setOnClickListener(view -> {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            Contract.Presenter presenter = new LoginPresenter();
-            presenter.userCardClickListener(this);
-        });
+        binding.nurseCard.setOnClickListener {
+            viewModel.callNurseLoginActivity()
+        }
+
+        binding.userCard.setOnClickListener {
+            viewModel.callUserLoginActivity()
+        }
+
+        viewModel.startNurseLoginActivity.observe(this){
+
+            it?.let {
+                val intent = Intent(this,NurseLoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        viewModel.startUserLoginActivity.observe(this){
+
+            it?.let {
+                val intent = Intent(this,UserLoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
     }
 
-    @Override
-    public void destroyActivity() {
-
-        finish();
-        Log.i("MainActivity", "destroyActivity: Activity Destroyed!");
-    }
+//    override fun destroyActivity() {
+//        finish()
+//        Log.i("MainActivity", "destroyActivity: Activity Destroyed!")
+//    }
 }

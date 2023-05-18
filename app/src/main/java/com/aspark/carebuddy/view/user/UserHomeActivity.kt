@@ -1,143 +1,114 @@
-package com.aspark.carebuddy.view.user;
+package com.aspark.carebuddy.view.user
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.aspark.carebuddy.UserHomeViewModel
+import com.aspark.carebuddy.databinding.ActivityUserHomeBinding
+import com.aspark.carebuddy.map.MapActivity
+import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.view.MainActivity
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+class UserHomeActivity : AppCompatActivity() {
 
-import com.aspark.carebuddy.Contract;
-import com.aspark.carebuddy.R;
-import com.aspark.carebuddy.databinding.ActivityUserHomeBinding;
-import com.aspark.carebuddy.model.LocationServicesProvider;
-import com.aspark.carebuddy.model.UserModel;
-import com.aspark.carebuddy.presenter.UserHomePresenter;
-import com.aspark.carebuddy.view.MainActivity;
-import com.aspark.carebuddy.view.MapActivity;
+    var isUserSignedIn = true
+    private lateinit var binding : ActivityUserHomeBinding
+    private val viewModel: UserHomeViewModel by viewModels()
 
-public class UserHomeActivity extends AppCompatActivity implements View.OnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    boolean isSignedIn = true;
-    ActivityUserHomeBinding binding;
+        binding = ActivityUserHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityUserHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setUserSignedIn();
+        setUserSignedIn()
 
         //TODO currentUser is null when app is opened after destroying it.
-        Log.i("UserHomeActivity", "onCreate: currentUser: "+ UserModel.getCurrentUser());
+        Log.i("UserHomeActivity", "onCreate: currentUser: " + User.currentUser)
 
-        ActivityResultLauncher<String[]> locationPermissionRequest =
-                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+        //check if location permission granted
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            Log.i("UserHomeActivity", "onCreate: Checked that permission granted")
 
-                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION,false);
-                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION,false);
-
-                  //  LocationServicesProvider locationServicesProvider = new LocationServicesProvider(this);
-
-                    if(fineLocationGranted != null && fineLocationGranted) {
-
-                        Toast.makeText(this, "Fine location granted", Toast.LENGTH_SHORT).show();
-                        //locationServicesProvider.getLastLocation(this, mapView, savedInstanceState);
-
-                        Intent intent = new Intent(this,MapActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
-                    else if( coarseLocationGranted !=null && coarseLocationGranted) {
-
-                        Toast.makeText(this, "Coarse Location Granted", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(this, "Location Permission denied", Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-//        locationPermissionRequest.launch(new String[]{
-//                Manifest.permission.ACCESS_FINE_LOCATION,
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//        });
-
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(this, "Checked that permission was GRANTED", Toast.LENGTH_SHORT).show();
-        }
         else {
+            Log.e("UserHomeActivity", "onCreate: Checked that permission was denied " )
+            showLocationPermissionDialog()
 
-            Toast.makeText(this, "onCreate: checked that permission was DENIED", Toast.LENGTH_SHORT).show();
-            locationPermissionRequest.launch(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            });
         }
 
-        binding.signOutBtn.setOnClickListener( view -> {
+        binding.signOutBtn.setOnClickListener {
 
-            Log.w("UserHomeActivity", "onCreate: User Logged Out" );
+            Log.w("UserHomeActivity", "onCreate: User Logged Out")
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            isUserSignedIn = false
+            setUserSignedIn()
+            finish()
+        }
 
-            isSignedIn = false;
-            setUserSignedIn();
-            finish();
-        });
+//        binding.locationIcon.setOnClickListener(this)
+//        binding.homeText.setOnClickListener(this)
+//        binding.downArrowIcon.setOnClickListener(this)
 
-        binding.locationIcon.setOnClickListener(this);
-        binding.homeText.setOnClickListener(this);
-        binding.downArrowIcon.setOnClickListener(this);
-        binding.bookServiceBtn.setOnClickListener(view -> {
+        binding.bookServiceBtn.setOnClickListener {
 
-            Log.d("UserHomeActivity", "bookService: button clicked ");
-            Contract.Presenter.PresenterUserHome presenterUserHome = new UserHomePresenter();
-            presenterUserHome.bookService(view.getContext());
+            Log.d("UserHomeActivity", "bookService: button clicked ")
+            viewModel.bookServiceClickListener()
 
-        });
-
-
+        }
     }
 
-    private void setUserSignedIn() {
+    private fun showLocationPermissionDialog() {
 
-        SharedPreferences preferences = getSharedPreferences(getPackageName(),MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean?> ->
 
-        Log.i("UserHomeActivity", "setUserSignedIn: isSignedIn "+isSignedIn);
+            val fineLocationGranted =
+                result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false)
 
-        editor.putBoolean("isSignedIn",isSignedIn);
+            val coarseLocationGranted =
+                result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false)
 
-        if (isSignedIn)
-               editor.putString("username",UserModel.getCurrentUser().getEmail());
-        else
-               editor.putString("username",null);
+            if (fineLocationGranted != null && fineLocationGranted) {
 
-        editor.apply();
+                Log.d("UserHomeActivity", "onCreate: fine Location Granted ")
+                val intent = Intent(this, MapActivity::class.java)
+                startActivity(intent)
+                finish()
+
+            } else if (coarseLocationGranted != null && coarseLocationGranted)
+                Log.d("UserHomeActivity", "onCreate: Coarse Location Granted ")
+
+            else Log.d("UserHomeActivity", "onCreate: Location Permission Denied ")
+
+        }
+
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+        )
     }
 
+    private fun setUserSignedIn() {
 
-    @Override
-    public void onClick(View view) {
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val editor = preferences.edit()
 
+        Log.i("UserHomeActivity", "setUserSignedIn: isUserSignedIn $isUserSignedIn")
+        editor.putBoolean("isUserSignedIn", isUserSignedIn)
 
+        if (isUserSignedIn) editor.putString("UserEmail", User.currentUser?.email)
+        else editor.putString("UserEmail", null)
 
-
+        editor.apply()
     }
 }

@@ -1,27 +1,22 @@
-package com.aspark.carebuddy.retrofit;
+package com.aspark.carebuddy.retrofit
 
-import com.google.gson.Gson;
+import com.google.gson.Gson
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+class RetrofitService {
 
-public class RetrofitService {
+    lateinit var retrofit: Retrofit
+        private set
 
-    private Retrofit retrofit;
-
-    public RetrofitService() {
-        initializeRetrofit();
+    init {
+        initializeRetrofit()
     }
 
-    private void initializeRetrofit() {
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.7:8080")    //ip address and server port number
-                .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .build();
-    }
-
-    public Retrofit getRetrofit() {
-        return retrofit;
+    private fun initializeRetrofit() {
+        retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.1.11:8080") //ip address and server port number
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
+            .build()
     }
 }
