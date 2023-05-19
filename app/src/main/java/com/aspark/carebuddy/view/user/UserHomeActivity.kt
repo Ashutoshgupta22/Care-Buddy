@@ -106,8 +106,8 @@ class UserHomeActivity : AppCompatActivity() {
         Log.i("UserHomeActivity", "setUserSignedIn: isUserSignedIn $isUserSignedIn")
         editor.putBoolean("isUserSignedIn", isUserSignedIn)
 
-        if (isUserSignedIn) editor.putString("UserEmail", User.currentUser?.email)
-        else editor.putString("UserEmail", null)
+        if (isUserSignedIn) editor.putString("userEmail", User.currentUser.email)
+        else editor.putString("userEmail", null)
 
         editor.apply()
     }

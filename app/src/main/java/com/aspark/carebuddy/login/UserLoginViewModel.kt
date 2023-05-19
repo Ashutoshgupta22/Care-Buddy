@@ -9,9 +9,11 @@ import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.RetrofitService
 import com.aspark.carebuddy.retrofit.request.LoginRequest
+import okhttp3.internal.http2.Http2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.HTTP
 
 class UserLoginViewModel: ViewModel() {
 
@@ -50,24 +52,27 @@ class UserLoginViewModel: ViewModel() {
 
                         if (response.isSuccessful ) {
 
+                            Log.i("UserLoginViewModel", "Welcome Back!")
+                            currentUser = response.body()!!
 
-                             if (response.body() != null) {
-
-                                 Log.i("UserLoginViewModel", "Welcome Back!")
-                                 currentUser = response.body()!!
-                                 Log.i("UserLoginViewModel", "onResponse: current user name ${currentUser.name}")
-                                 mCallActivity.value = true
-                             }
-                            else {
-                                 Log.i(
-                                     "UserLoginViewModel",
-                                     "onResponse: Error response message= returned user from " +
-                                             "backend is null")
-
-                                 mLoginErrorMessage.value = "Invalid email or password"
-                             }
+                            Log.i("UserLoginViewModel", "onResponse: " +
+                                    "current user name ${currentUser.name}")
+                            mCallActivity.value = true
                         }
-                        else Log.e("UserLoginViewModel", "onResponse: Response unsuccessful ")
+                        else if(response.code() == 403){
+                            Log.e("UserLoginViewModel", "onResponse: Response " +
+                                    "unsuccessful invalid email ")
+
+                            mLoginErrorMessage.value = "Invalid email or password"
+                        }
+                        else if (response.code() == 401){
+
+                            Log.e("UserLoginViewModel", "onResponse: Response " +
+                                    "email not registered ")
+
+                            mLoginErrorMessage.value = "Email not registered"
+
+                        }
                 }
 
                 override fun onFailure(call: Call<User?>, t: Throwable) {

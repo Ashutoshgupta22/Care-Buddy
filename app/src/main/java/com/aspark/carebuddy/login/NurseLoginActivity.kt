@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityNurseLoginBinding
 import com.aspark.carebuddy.view.nurse.NurseHomeActivity
@@ -35,14 +36,12 @@ class NurseLoginActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isErrorVisible.observe(this){
+        viewModel.loginErrorMessage.observe(this){
 
             it?.let {
 
-                if (it)
-                    showErrorLogin()
-                else
-                    hideErrorLogin()
+                if (it.isNotEmpty())
+                    showErrorLogin(it)
             }
         }
 
@@ -68,12 +67,15 @@ class NurseLoginActivity : AppCompatActivity() {
 
             Log.w("NurseLoginActivity", "onCreate: " )
         }
+
+        binding.etEmail.doAfterTextChanged { hideErrorLogin() }
+        binding.etPassword.doAfterTextChanged { hideErrorLogin() }
     }
 
-    private fun showErrorLogin() {
+    private fun showErrorLogin(s: String) {
 
         binding.cvLoginError.visibility = View.VISIBLE
-        binding.tvLoginError.text = getString(R.string.invalid_email_or_password)
+        binding.tvLoginError.text = s
     }
 
     private fun hideErrorLogin() {

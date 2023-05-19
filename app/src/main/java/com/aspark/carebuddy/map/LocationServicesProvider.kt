@@ -10,9 +10,8 @@ class LocationServicesProvider(val context: Context) {
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
     }
-    private var lastLocation: Location? = null
 
-    fun getLastLocation(showMaps: (Location) -> Unit): Location?  {
+    fun getLastLocation(showMaps: (Location?) -> Unit)  {
 
         try {
 
@@ -24,8 +23,6 @@ class LocationServicesProvider(val context: Context) {
                         Log.d("LocationServiceProvider", "onSuccess() returned: " +
                                 location.longitude + " " + location.latitude)
 
-                        lastLocation = location
-                       // mapView.showMaps(savedInstanceState, location)
                         showMaps(location)
 
                     } else {
@@ -38,16 +35,15 @@ class LocationServicesProvider(val context: Context) {
                         //TODO to prevent this use getCurrentLocation method instead of getLastLocation.
                         Log.e("LocationServiceProvider", "getLastLocation: " +
                                 "Error Occurred location is null")
-                        lastLocation = null
+
+                        showMaps(null)
                     }
                 }
         } catch (exception: SecurityException) {
 
             Log.e("LocationServiceProvider", "getLastLocation: Location " +
                     "Permission denied",exception )
-            lastLocation = null
         }
 
-        return lastLocation
     }
 }

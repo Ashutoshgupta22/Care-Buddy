@@ -24,30 +24,30 @@ class NurseHomeActivity : AppCompatActivity() {
         binding.btnSignOut.setOnClickListener {
 
             viewModel.signOutNurse()
+
+            finish()
         }
 
         viewModel.isNurseSignedIn.observe(this) {
 
             it?.let {
-                setNurseSignedIn()
+                setIsNurseSignedIn(it)
             }
         }
 
     }
 
-    private fun setNurseSignedIn() {
+    private fun setIsNurseSignedIn(b: Boolean) {
 
         val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
         val editor = preferences.edit()
 
-        Log.i("nurseHomeActivity", "setNurseSignedIn: isSignedIn ${viewModel.isNurseSignedIn}")
+        Log.i("nurseHomeActivity", "setNurseSignedIn: isSignedIn $b")
 
-        viewModel.isNurseSignedIn.value?.let { editor.putBoolean("isNurseSignedIn", it) }
+        editor.putBoolean("isNurseSignedIn", b)
 
-        if (viewModel.isNurseSignedIn.value == true)
-            editor.putString("NurseUsername", Nurse.currentNurse.email)
-        else
-            editor.putString("NurseUsername", null)
+        if (b)
+            editor.putString("nurseEmail", Nurse.currentNurse.email)
 
         editor.apply()
     }

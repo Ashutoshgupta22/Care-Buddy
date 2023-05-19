@@ -49,18 +49,20 @@ class MapActivity : AppCompatActivity() {
 
         viewModel.lastLocation.observe(this){
 
-            if (it == null)
+            if (it == null) {
                 Toast.makeText(this, "Couldn't determine location",
                     Toast.LENGTH_SHORT).show()
+                finish()
+            }
 
-            else  showGoogleMaps(savedInstanceState!!,it)
+            else  showGoogleMaps(savedInstanceState,it)
         }
     }
-    private fun showGoogleMaps(savedInstanceState: Bundle, location: Location) {
+    private fun showGoogleMaps(savedInstanceState: Bundle?, location: Location) {
 
         MapsInitializer.initialize(this)
         binding.mapView.onCreate(savedInstanceState)
-        binding.mapView.onResume()
+        //binding.mapView.onResume()
         binding.mapView.getMapAsync { googleMap: GoogleMap ->
             val latLng = LatLng(location.latitude, location.longitude)
             val marker = googleMap.addMarker(
@@ -70,28 +72,30 @@ class MapActivity : AppCompatActivity() {
                     .draggable(false)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
             )
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) !=
-                PackageManager.PERMISSION_GRANTED
-            ) {
+//            if (ActivityCompat.checkSelfPermission(this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION) !=
+//                PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION) !=
+//                PackageManager.PERMISSION_GRANTED) {
+//
+//                // TODO: Consider calling
+//                //    ActivityCompat#requestPermissions
+//                // here to request the missing permissions, and then overriding
+//                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                //                                          int[] grantResults)
+//                // to handle the case where the user grants the permission. See the documentation
+//                // for ActivityCompat#requestPermissions for more details.
+//                return@getMapAsync
+//            }
 
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return@getMapAsync
+            try {
+                googleMap.isMyLocationEnabled = true
+
+            } catch (e: SecurityException){
+                Log.e("MapActivity", "showGoogleMaps: Location Permission denied" )
             }
-            googleMap.isMyLocationEnabled = true
+
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
             googleMap.uiSettings.isZoomControlsEnabled = true
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000, null)
@@ -108,12 +112,14 @@ class MapActivity : AppCompatActivity() {
                     "showGoogleMaps: CameraMoveStartedListener  marker is null"
                 )
             }
+
             googleMap.setOnCameraMoveListener {
                 val midLatLng = googleMap.cameraPosition.target
                 if (marker != null) {
                     marker.position = midLatLng
                 } else Log.e("MapActivity", "showGoogleMaps: cameraMoveListener marker is null")
             }
+
             googleMap.setOnCameraIdleListener {
                 Log.w("MapActivity", "showGoogleMaps: Camera idle getting address")
                 val midLatLng = googleMap.cameraPosition.target
@@ -164,4 +170,11 @@ class MapActivity : AppCompatActivity() {
             binding.addressView.text = address
         } else Log.e("MapActivity", "getAddressText: Address returned is null")
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.i("MapActivity", "onResume: map activity resumed")
+    }
+
 }
