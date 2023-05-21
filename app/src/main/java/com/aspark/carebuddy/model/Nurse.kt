@@ -1,6 +1,6 @@
 package com.aspark.carebuddy.model
 
- data class Nurse private constructor(
+  class Nurse private constructor(
      val id: Int, var name: String,
      var age: Int, var email: String,
      var password: String, var pincode: String,

@@ -1,8 +1,6 @@
 package com.aspark.carebuddy.map
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -11,7 +9,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.aspark.carebuddy.databinding.ActivityMapBinding
 import com.aspark.carebuddy.view.user.UserHomeActivity
 import com.google.android.gms.maps.CameraUpdateFactory

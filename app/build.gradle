@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -35,6 +36,9 @@ android {
 }
 
 dependencies {
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
 
     //by viewModels()
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
