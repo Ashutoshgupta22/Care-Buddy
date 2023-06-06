@@ -25,7 +25,7 @@
             android:value="@string/google_maps_key"/>
 
         <activity
-            android:name=".view.MapActivity"
+            android:name=".map.MapActivity"
             android:exported="false" />
         <activity
             android:name=".view.nurse.NurseHomeActivity"
@@ -42,21 +42,21 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.user.SignUpUserActivity"
+            android:name=".signup.SignUpUserActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.nurse.NurseLoginActivity"
+            android:name=".login.NurseLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.user.UserLoginActivity"
+            android:name=".login.UserLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
