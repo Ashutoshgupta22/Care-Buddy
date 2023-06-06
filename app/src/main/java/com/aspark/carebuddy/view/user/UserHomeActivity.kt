@@ -3,10 +3,13 @@ package com.aspark.carebuddy.view.user
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.aspark.carebuddy.UserHomeViewModel
@@ -17,7 +20,7 @@ import com.aspark.carebuddy.view.MainActivity
 
 class UserHomeActivity : AppCompatActivity() {
 
-    var isUserSignedIn = true
+    private var isUserSignedIn = true
     private lateinit var binding : ActivityUserHomeBinding
     private val viewModel: UserHomeViewModel by viewModels()
 
@@ -27,20 +30,36 @@ class UserHomeActivity : AppCompatActivity() {
         binding = ActivityUserHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUserSignedIn()
+        setIsUserSignedIn()
 
-        //TODO currentUser is null when app is opened after destroying it.
         Log.i("UserHomeActivity", "onCreate: currentUser: " + User.currentUser)
+
+        //check if notification permission granted
+        if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+            Log.i("UserHomeActivity", "onCreate: Checked notification permission granted")
+
+        else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)){
+
+            //show a educational ui to inform the user of benefits of accepting this permission
+            Toast.makeText(this, "Accept notification permission to not " +
+                    "miss any update about your bookings",
+                Toast.LENGTH_LONG).show()
+        }
+
+        else {
+            Log.e("UserHomeActivity", "onCreate: Checked notification permission was denied " )
+            showNotificationPermissionDialog()
+        }
 
         //check if location permission granted
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            Log.i("UserHomeActivity", "onCreate: Checked that permission granted")
+            Log.i("UserHomeActivity", "onCreate: Checked location permission granted")
 
         else {
-            Log.e("UserHomeActivity", "onCreate: Checked that permission was denied " )
+            Log.e("UserHomeActivity", "onCreate: Checked location permission was denied " )
             showLocationPermissionDialog()
-
         }
 
         binding.signOutBtn.setOnClickListener {
@@ -50,7 +69,7 @@ class UserHomeActivity : AppCompatActivity() {
             startActivity(intent)
 
             isUserSignedIn = false
-            setUserSignedIn()
+            setIsUserSignedIn()
             finish()
         }
 
@@ -62,8 +81,28 @@ class UserHomeActivity : AppCompatActivity() {
 
             Log.d("UserHomeActivity", "bookService: button clicked ")
             viewModel.bookServiceClickListener()
-
         }
+    }
+
+    private fun showNotificationPermissionDialog(){
+
+        val notificationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()){ isGranted: Boolean ->
+
+            if (isGranted){
+
+                Log.d("UserHomeActivity", "showNotificationPermissionDialog: " +
+                        "notification permission granted ")
+
+            }
+            else{
+
+                Log.e("UserHomeActivity", "showNotificationPermissionDialog: " +
+                        "notification permission denied")
+            }
+        }
+
+        notificationPermissionRequest.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun showLocationPermissionDialog() {
@@ -98,12 +137,12 @@ class UserHomeActivity : AppCompatActivity() {
         )
     }
 
-    private fun setUserSignedIn() {
+    private fun setIsUserSignedIn() {
 
         val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
         val editor = preferences.edit()
 
-        Log.i("UserHomeActivity", "setUserSignedIn: isUserSignedIn $isUserSignedIn")
+        Log.i("UserHomeActivity", "setIsUserSignedIn: isUserSignedIn $isUserSignedIn")
         editor.putBoolean("isUserSignedIn", isUserSignedIn)
 
         if (isUserSignedIn) editor.putString("userEmail", User.currentUser.email)

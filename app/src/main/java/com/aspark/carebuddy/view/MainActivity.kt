@@ -34,57 +34,31 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "onCreate: currentUser: $userEmail")
 
             User.currentUser.email = userEmail
-            viewModel.callUserHomeActivity()
+
+            val intent = Intent(this,UserHomeActivity::class.java)
+            startActivity(intent)
 
         } else if (isNurseSignedIn) {
 
             val nurseEmail = preferences.getString("nurseEmail", null)
             Log.d("MainActivity", "onCreate: currentNurse: $nurseEmail")
             currentNurse.email = nurseEmail!!
-            viewModel.callNurseHomeActivity()
-        }
 
-        viewModel.startUserHomeActivity.observe(this){
-
-            it?.let {
-                val intent = Intent(this,UserHomeActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        viewModel.startNurseHomeActivity.observe(this){
-
-            it?.let {
-                val intent = Intent(this,NurseHomeActivity::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this,NurseHomeActivity::class.java)
+            startActivity(intent)
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.nurseCard.setOnClickListener {
-            viewModel.callNurseLoginActivity()
+            val intent = Intent(this,NurseLoginActivity::class.java)
+            startActivity(intent)
         }
 
         binding.userCard.setOnClickListener {
-            viewModel.callUserLoginActivity()
-        }
-
-        viewModel.startNurseLoginActivity.observe(this){
-
-            it?.let {
-                val intent = Intent(this,NurseLoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        viewModel.startUserLoginActivity.observe(this){
-
-            it?.let {
-                val intent = Intent(this,UserLoginActivity::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this,UserLoginActivity::class.java)
+            startActivity(intent)
         }
 
     }

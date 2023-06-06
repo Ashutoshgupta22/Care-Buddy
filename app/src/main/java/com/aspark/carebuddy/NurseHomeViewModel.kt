@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.model
+package com.aspark.carebuddy
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

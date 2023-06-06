@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.aspark.carebuddy.databinding.ActivityNurseHomeBinding
 import com.aspark.carebuddy.model.Nurse
-import com.aspark.carebuddy.model.NurseHomeViewModel
+import com.aspark.carebuddy.NurseHomeViewModel
 
 class NurseHomeActivity : AppCompatActivity() {
 
