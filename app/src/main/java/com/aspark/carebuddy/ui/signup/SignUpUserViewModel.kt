@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.signup
+package com.aspark.carebuddy.ui.signup
 
 import android.util.Log
 import androidx.lifecycle.LiveData

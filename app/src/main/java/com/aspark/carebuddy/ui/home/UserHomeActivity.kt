@@ -1,22 +1,19 @@
-package com.aspark.carebuddy.view.user
+package com.aspark.carebuddy.ui.home
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.aspark.carebuddy.UserHomeViewModel
 import com.aspark.carebuddy.databinding.ActivityUserHomeBinding
 import com.aspark.carebuddy.map.MapActivity
 import com.aspark.carebuddy.model.User
-import com.aspark.carebuddy.view.MainActivity
+import com.aspark.carebuddy.ui.MainActivity
 
 class UserHomeActivity : AppCompatActivity() {
 

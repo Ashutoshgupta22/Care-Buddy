@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.login
+package com.aspark.carebuddy.ui.login
 
 import android.content.Intent
 import android.graphics.Color
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityUserLoginBinding
-import com.aspark.carebuddy.signup.SignUpUserActivity
-import com.aspark.carebuddy.view.user.UserHomeActivity
+import com.aspark.carebuddy.ui.signup.SignUpUserActivity
+import com.aspark.carebuddy.ui.home.UserHomeActivity
 
 class UserLoginActivity : AppCompatActivity() {
 

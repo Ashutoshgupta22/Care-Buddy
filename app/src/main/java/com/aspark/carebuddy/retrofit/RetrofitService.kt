@@ -15,7 +15,7 @@ class RetrofitService {
 
     private fun initializeRetrofit() {
         retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.3:8080") //ip address and server port number
+            .baseUrl("http://192.168.1.6:8080") //ip address and server port number
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
     }

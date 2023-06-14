@@ -1,4 +1,4 @@
-package com.aspark.carebuddy
+package com.aspark.carebuddy.ui.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

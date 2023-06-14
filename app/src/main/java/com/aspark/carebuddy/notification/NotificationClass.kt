@@ -8,8 +8,9 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.aspark.carebuddy.R
+import dagger.hilt.android.qualifiers.ActivityContext
 
-open class NotificationClass(private val context: Context) {
+open class NotificationClass(  private val context: Context) {
 
     init {
         registerNotificationChannel()
@@ -20,7 +21,7 @@ open class NotificationClass(private val context: Context) {
         Log.d("NotificationClass", "registerNotificationChannel:" +
                 " registering notification channel")
 
-        val name = "Patient Request"
+        val name = "Booking Request"
         val description = "Receive a notification when patients request your services"
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel("100",name,importance)
@@ -32,8 +33,8 @@ open class NotificationClass(private val context: Context) {
         notificationManager.createNotificationChannel(channel)
 
         val notification = Notification.Builder(context,"100")
-            .setContentTitle("This is a notification")
-            .setContentText("This is content text")
+            .setContentTitle("title")
+            .setContentText("description")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setAutoCancel(true)
 
@@ -43,10 +44,12 @@ open class NotificationClass(private val context: Context) {
         }
         catch (e: SecurityException) {
             Log.e("NotificationClass", "registerNotificationChannel: " +
-                        "Notification permission not granted",e
+                    "Notification permission not granted",e
             )
 
         }
+
+
 
     }
 }

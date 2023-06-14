@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.login
+package com.aspark.carebuddy.ui.login
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -9,11 +9,9 @@ import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.RetrofitService
 import com.aspark.carebuddy.retrofit.request.LoginRequest
-import okhttp3.internal.http2.Http2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.HTTP
 
 class UserLoginViewModel: ViewModel() {
 

@@ -36,42 +36,42 @@
             android:name=".map.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".view.nurse.NurseHomeActivity"
+            android:name=".ui.home.NurseHomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.user.UserHomeActivity"
+            android:name=".ui.home.UserHomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".signup.SignUpUserActivity"
+            android:name=".ui.signup.SignUpUserActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.NurseLoginActivity"
+            android:name=".ui.login.NurseLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.UserLoginActivity"
+            android:name=".ui.login.UserLoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.login
+package com.aspark.carebuddy.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityNurseLoginBinding
-import com.aspark.carebuddy.view.nurse.NurseHomeActivity
+import com.aspark.carebuddy.ui.home.NurseHomeActivity
 
 class NurseLoginActivity : AppCompatActivity() {
 
