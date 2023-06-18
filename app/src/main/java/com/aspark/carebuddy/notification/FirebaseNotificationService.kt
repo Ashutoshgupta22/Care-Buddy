@@ -2,6 +2,7 @@ package com.aspark.carebuddy.notification
 
 import android.app.Notification
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.aspark.carebuddy.R
@@ -14,10 +15,12 @@ class FirebaseNotificationService: FirebaseMessagingService(){
 
     override fun onNewToken(token: String) {
 
-        currentUser.firebaseToken = token
-        Log.i("FirebaseNotificationService", "onNewToken: RefreshedToken:" +
-                " ${currentUser.firebaseToken}")
+        Log.i("FirebaseNotificationService", "onNewToken: RefreshedToken: $token")
 
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putString("firebase_token", token)
+        editor.apply()
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -28,10 +31,5 @@ class FirebaseNotificationService: FirebaseMessagingService(){
 
         val title = message.notification?.title
         val description = message.notification?.body
-
-
     }
-
-
-
 }

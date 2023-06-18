@@ -88,14 +88,15 @@ class MapActivity : AppCompatActivity() {
 
             try {
                 googleMap.isMyLocationEnabled = true
-
-            } catch (e: SecurityException){
+            }
+            catch (e: SecurityException){
                 Log.e("MapActivity", "showGoogleMaps: Location Permission denied" )
             }
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
             googleMap.uiSettings.isZoomControlsEnabled = true
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000, null)
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000,
+                null)
 
             googleMap.setOnCameraMoveStartedListener {
 
@@ -114,7 +115,8 @@ class MapActivity : AppCompatActivity() {
                 val midLatLng = googleMap.cameraPosition.target
                 if (marker != null) {
                     marker.position = midLatLng
-                } else Log.e("MapActivity", "showGoogleMaps: cameraMoveListener marker is null")
+                } else Log.e("MapActivity", "showGoogleMaps: cameraMoveListener " +
+                        "marker is null")
             }
 
             googleMap.setOnCameraIdleListener {
@@ -128,7 +130,8 @@ class MapActivity : AppCompatActivity() {
                                 nowLatLng!!.longitude + " " + nowLatLng!!.latitude
                     )
                     getAddressText(nowLatLng!!)
-                } else Log.e("MapActivity", "showGoogleMaps: cameraIdleListener marker is null")
+                } else Log.e("MapActivity", "showGoogleMaps: cameraIdleListener " +
+                        "marker is null")
             }
         }
 
@@ -146,7 +149,8 @@ class MapActivity : AppCompatActivity() {
                 viewModel.confirmLocationClickListener(location,pincode)
 
             } else {
-                Log.e("MapActivity", "showGoogleMaps: saveLocationBtnListener nowLatLng is null")
+                Log.e("MapActivity", "showGoogleMaps: saveLocationBtnListener" +
+                        " nowLatLng is null")
             }
         }
     }
@@ -155,17 +159,21 @@ class MapActivity : AppCompatActivity() {
         var addresses: List<Address>? = null
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
-            addresses = geocoder.getFromLocation(nowLatLng.latitude, nowLatLng.longitude, 1)
+            addresses = geocoder.getFromLocation(nowLatLng.latitude,
+                nowLatLng.longitude, 1)
+
         } catch (e: IOException) {
             e.printStackTrace()
         }
         if (!addresses.isNullOrEmpty()) {
+
             val address = addresses[0].getAddressLine(0)
             pincode = addresses[0].postalCode
             Log.d("TAG", "getAddressText() returned: $address")
             Log.d("TAG", "Pincode $pincode")
             binding.addressView.text = address
-        } else Log.e("MapActivity", "getAddressText: Address returned is null")
+        }
+        else Log.e("MapActivity", "getAddressText: Address returned is null")
     }
 
     override fun onResume() {

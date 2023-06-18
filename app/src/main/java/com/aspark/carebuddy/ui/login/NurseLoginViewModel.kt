@@ -16,18 +16,17 @@ import retrofit2.Response
 class NurseLoginViewModel : ViewModel() {
 
     private val mCallActivity = MutableLiveData<Boolean>()
-    val callActivity: LiveData<Boolean>
-        get() = mCallActivity
+    val callActivity: LiveData<Boolean> = mCallActivity
     private val mLoginErrorMessage = MutableLiveData<String>()
-    val loginErrorMessage: LiveData<String>
-        get() = mLoginErrorMessage
+    val loginErrorMessage: LiveData<String> = mLoginErrorMessage
     var showNetworkError = MutableLiveData<Boolean>()
 
-    fun loginClickListener(email: String, password: String) {
 
-        val nurseApi = RetrofitService()
-            .retrofit
-            .create(NurseApi::class.java)
+    private val nurseApi = RetrofitService()
+        .retrofit
+        .create(NurseApi::class.java)
+
+    fun loginClickListener(email: String, password: String, firebaseToken: String) {
 
         val loginRequest = LoginRequest(email,password)
         Log.d("NurseLoginViewModel", "loginClickListener: $loginRequest")
@@ -36,17 +35,19 @@ class NurseLoginViewModel : ViewModel() {
         nurseApi.loginNurse(loginRequest)
             .enqueue(object : Callback<Nurse>{
 
-                override fun onResponse(
-                    call: Call<Nurse>, response: Response<Nurse>) {
+                override fun onResponse(call: Call<Nurse>, response: Response<Nurse>) {
 
                     if (response.isSuccessful ) {
 
                         Log.i("NurseLoginViewModel", "Welcome Back!")
                         Nurse.currentNurse = response.body()!!
 
+                        setNurseFirebaseToken(firebaseToken, email)
+
                         Log.i("NurseLoginViewModel", "onResponse: " +
                                 "current user name ${User.currentUser.name}")
                         mCallActivity.value = true
+
                     }
                     else if(response.code() == 403){
                         Log.e("NurseLoginViewModel", "onResponse: Response " +
@@ -69,5 +70,31 @@ class NurseLoginViewModel : ViewModel() {
                     Log.e("NurseLoginViewModel", "onFailure: Nurse login Failed", t.cause )
                 }
             })
+    }
+
+    private fun setNurseFirebaseToken(firebaseToken: String, email: String) {
+
+        Nurse.currentNurse.firebaseToken = firebaseToken
+
+        nurseApi
+            .setNurseFirebaseToken(email, firebaseToken)
+            .enqueue(object : Callback<Boolean> {
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+
+                    if (response.isSuccessful && response.body() == true) {
+                        Log.d("NurseLoginViewModel", "onResponse: setToken success")
+                    }
+                    else Log.e("NurseLoginViewModel", "onResponse: " +
+                            "set firebaseToken response unsuccessful" )
+
+                }
+
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+
+                    Log.e("NurseLoginViewModel", "onFailure: " +
+                            "set firebase token FAILED" )
+                }
+            })
+
     }
 }

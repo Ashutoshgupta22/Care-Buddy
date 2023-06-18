@@ -23,7 +23,8 @@ class UserLoginActivity : AppCompatActivity() {
         binding = ActivityUserLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //hideUserLoginError()
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val firebaseToken = preferences.getString("firebase_token", null)
 
         if (intent.getStringExtra("emailSent") != null) {
 
@@ -56,7 +57,7 @@ class UserLoginActivity : AppCompatActivity() {
            val sEmail = binding.userLoginEmail.text.toString()
            val sPassword = binding.userLoginPassword.text.toString()
 
-            viewModel.userLoginClickListener(sEmail,sPassword)
+            viewModel.userLoginClickListener(sEmail, sPassword, firebaseToken!!)
         }
 
         binding.signUpTextView.setOnClickListener {

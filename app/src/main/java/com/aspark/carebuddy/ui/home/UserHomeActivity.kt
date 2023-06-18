@@ -3,6 +3,7 @@ package com.aspark.carebuddy.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -45,7 +46,8 @@ class UserHomeActivity : AppCompatActivity() {
         }
 
         else {
-            Log.e("UserHomeActivity", "onCreate: Checked notification permission was denied " )
+            Log.e("UserHomeActivity", "onCreate: Checked notification " +
+                    "permission was denied " )
             showNotificationPermissionDialog()
         }
 
@@ -99,7 +101,11 @@ class UserHomeActivity : AppCompatActivity() {
             }
         }
 
-        notificationPermissionRequest.launch(Manifest.permission.POST_NOTIFICATIONS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // no need to ask notification permission for android version below 13
+           // notificationPermissionRequest.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
     }
 
     private fun showLocationPermissionDialog() {
@@ -113,6 +119,9 @@ class UserHomeActivity : AppCompatActivity() {
             val coarseLocationGranted =
                 result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false)
 
+            val notificationGranted =
+                result.getOrDefault(Manifest.permission.POST_NOTIFICATIONS, false)
+
             if (fineLocationGranted != null && fineLocationGranted) {
 
                 Log.d("UserHomeActivity", "onCreate: fine Location Granted ")
@@ -123,12 +132,18 @@ class UserHomeActivity : AppCompatActivity() {
             } else if (coarseLocationGranted != null && coarseLocationGranted)
                 Log.d("UserHomeActivity", "onCreate: Coarse Location Granted ")
 
+            else if( notificationGranted != null && notificationGranted) {
+                Log.d("UserHomeActivity", "showLocationPermissionDialog: " +
+                        "Notification granted")
+            }
+
             else Log.d("UserHomeActivity", "onCreate: Location Permission Denied ")
 
         }
 
         locationPermissionRequest.launch(
             arrayOf(
+                Manifest.permission.POST_NOTIFICATIONS,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
         )

@@ -22,6 +22,25 @@ class NurseLoginActivity : AppCompatActivity() {
         binding = ActivityNurseLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val firebaseToken = preferences.getString("firebase_token", null)
+
+        binding.btNurseLogin.setOnClickListener {
+
+            val email = binding.etEmail.text.toString()
+            val password  = binding.etPassword.text.toString()
+            viewModel.loginClickListener(email, password, firebaseToken!!)
+        }
+
+        binding.etEmail.addTextChangedListener {
+
+            Log.w("NurseLoginActivity", "onCreate: " )
+        }
+
+        binding.etEmail.doAfterTextChanged { hideErrorLogin() }
+        binding.etPassword.doAfterTextChanged { hideErrorLogin() }
+
+
         viewModel.callActivity.observe(this) {
 
             Log.d("NurseLoginActivity", "onCreate: callActivity observer called")
@@ -54,21 +73,6 @@ class NurseLoginActivity : AppCompatActivity() {
                     showNetworkError()
             }
         }
-
-        binding.btNurseLogin.setOnClickListener {
-
-            val email = binding.etEmail.text.toString()
-            val password  = binding.etPassword.text.toString()
-            viewModel.loginClickListener(email,password)
-        }
-
-        binding.etEmail.addTextChangedListener {
-
-            Log.w("NurseLoginActivity", "onCreate: " )
-        }
-
-        binding.etEmail.doAfterTextChanged { hideErrorLogin() }
-        binding.etPassword.doAfterTextChanged { hideErrorLogin() }
     }
 
     private fun showErrorLogin(s: String) {

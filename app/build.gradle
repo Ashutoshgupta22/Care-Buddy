@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
 
     //by viewModels()
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation 'androidx.fragment:fragment-ktx:1.6.0'
 
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'

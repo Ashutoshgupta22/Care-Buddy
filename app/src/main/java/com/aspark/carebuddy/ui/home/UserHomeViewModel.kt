@@ -14,11 +14,6 @@ import retrofit2.Response
 
 class UserHomeViewModel: ViewModel() {
 
-    fun showPermissionDialog() {
-
-
-    }
-
     fun bookServiceClickListener(){
 
         bookService()
@@ -35,7 +30,7 @@ class UserHomeViewModel: ViewModel() {
         locationData.latitude = User.currentUser.latitude
         locationData.longitude = User.currentUser.longitude
 
-        Log.d("UserHomePresenter", "bookService: Calling backend for  " +
+        Log.d("UserHomeViewModel", "bookService: Calling backend for  " +
                 (User.currentUser.email)
         )
 
@@ -48,18 +43,17 @@ class UserHomeViewModel: ViewModel() {
 
                 override fun onResponse(call: Call<Nurse?>, response: Response<Nurse?>) {
 
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
 
-                        val selectedNurse = response.body()
-                        Log.d("UserHomePresenter", "onResponse: ${selectedNurse?.name}")
+                        Log.d("UserHomeViewModel", "onResponse: book service success")
                     } else
-                        Log.i("UserHomePresenter", "onResponse: Response Unsuccessful: "
+                        Log.e("UserHomeViewModel", "onResponse: Book service Unsuccessful: "
                                 +response.body())
                 }
 
                 override fun onFailure(call: Call<Nurse?>, t: Throwable) {
 
-                    Log.e("UserHomePresenter", "onFailure: ",t.cause )
+                    Log.e("UserHomeViewModel", "onFailure: Book service Failed",t.cause )
                 }
             })
     }

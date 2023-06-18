@@ -19,6 +19,10 @@ interface UserApi {
     @POST("/api/user/login")
     fun loginUser(@Body loginRequest: LoginRequest): Call<User?>
 
+    @POST("/api/user/set-firebase-token/{email}")
+    fun setUserFirebaseToken( @Path(value = "email") email: String,
+                               @Body firebaseToken: String) : Call<Boolean>
+
     @POST("/api/user/save-location")
     fun saveLocation(@Body locationData: LocationData): Call<Boolean>
 

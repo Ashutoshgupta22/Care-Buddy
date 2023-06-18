@@ -16,16 +16,16 @@ import retrofit2.Response
 class UserLoginViewModel: ViewModel() {
 
     private val mCallActivity = MutableLiveData<Boolean>()
-    val callActivity: LiveData<Boolean>
-        get() = mCallActivity
+    val callActivity: LiveData<Boolean> = mCallActivity
     private val mLoginErrorMessage = MutableLiveData<String>()
-    val loginErrorMessage: LiveData<String>
-        get() = mLoginErrorMessage
+    val loginErrorMessage: LiveData<String> = mLoginErrorMessage
+
+    private val userApi = RetrofitService().retrofit.create(UserApi::class.java)
 
 
-    fun userLoginClickListener(email: String, password: String) {
+    fun userLoginClickListener(email: String, password: String, firebaseToken: String) {
 
-        callLoginApi(LoginRequest(email,password))
+        callLoginApi(LoginRequest(email,password), firebaseToken)
 
         //TODO add try and catch to get socketTimeoutException
 
@@ -39,9 +39,7 @@ class UserLoginViewModel: ViewModel() {
 
     }
 
-    private fun callLoginApi(loginRequest: LoginRequest){
-
-        val userApi = RetrofitService().retrofit.create(UserApi::class.java)
+    private fun callLoginApi(loginRequest: LoginRequest, firebaseToken: String){
 
         userApi.loginUser(loginRequest)
             .enqueue(object : Callback<User?> {
@@ -56,6 +54,8 @@ class UserLoginViewModel: ViewModel() {
                             Log.i("UserLoginViewModel", "onResponse: " +
                                     "current user name ${currentUser.name}")
                             mCallActivity.value = true
+
+                            setFirebaseToken(loginRequest.email, firebaseToken)
                         }
                         else if(response.code() == 403){
                             Log.e("UserLoginViewModel", "onResponse: Response " +
@@ -75,6 +75,29 @@ class UserLoginViewModel: ViewModel() {
 
                 override fun onFailure(call: Call<User?>, t: Throwable) {
                     Log.e("UserLoginViewModel", "onFailure: User Login Failed", t)
+                }
+            })
+    }
+
+    private fun setFirebaseToken(email: String, firebaseToken: String) {
+
+        currentUser.firebaseToken = firebaseToken
+
+        userApi
+            .setUserFirebaseToken(email, firebaseToken)
+            .enqueue(object : Callback<Boolean> {
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+
+                    if (response.isSuccessful && response.body() == true)
+                        Log.i("UserLoginViewModel", "onResponse: setFirebaseToken" +
+                                " successful")
+                    else
+                        Log.e("UserLoginViewModel", "onResponse: setFirebaseToken " +
+                                "response unsuccessful" )
+                }
+
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    Log.e("UserLoginViewModel", "onFailure: setFirebaseToken Failed", t )
                 }
             })
     }
