@@ -1,19 +1,21 @@
 package com.aspark.carebuddy.model
 
-  class Nurse private constructor(
-     val id: Int, var name: String,
-     var age: Int, var email: String,
-     var password: String, var pincode: String,
-     var latitude: Double, var longitude: Double,
-     var userRole : String, var locked: Boolean,
-     var enabled: Boolean) {
+  class Nurse private constructor() {
+     var id =  0
+     var name: String? = null
+     var age = 0
+     var email: String? = null
+     var password: String? = null
+     var pincode: String? = null
+     var firebaseToken: String? = null
+     var latitude = 0.0
+     var longitude = 0.0
+     var userRole : String? = null
+     var locked = false
+     var enabled = false
 
 
      companion object{
-
-            var currentNurse = Nurse(-1,"",-1,"",
-                                    "","",-1.00,-1.00,
-                                    "NURSE",false,false)
+        var currentNurse = Nurse()
      }
-
- }
+  }

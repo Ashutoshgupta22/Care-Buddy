@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.signup
+package com.aspark.carebuddy.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.aspark.carebuddy.databinding.ActivitySignUpUserBinding
-import com.aspark.carebuddy.login.UserLoginActivity
-import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.ui.login.UserLoginActivity
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -75,13 +74,13 @@ class SignUpUserActivity : AppCompatActivity() {
     private fun showSignUpFailed(t:Throwable) {
 
         Toast.makeText(this, "Save Failed!!", Toast.LENGTH_LONG).show()
-        Logger.getLogger(SignUpUserActivity::class.java.name).log(Level.SEVERE, "Error Occurred", t)
+        Logger.getLogger(SignUpUserActivity::class.java.name).log(Level.SEVERE,
+            "Error Occurred", t)
     }
 
     private fun verifyInput(
         sName: String, sAge: String, sEmail: String,
-        sPassword: String, sConfirmPassword: String
-    ): Boolean {
+        sPassword: String, sConfirmPassword: String): Boolean {
 
         if (sName == "") {
             binding.userSignUpName.error = "Name can not be empty"

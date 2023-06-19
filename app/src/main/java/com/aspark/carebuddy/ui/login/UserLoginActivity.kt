@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.login
+package com.aspark.carebuddy.ui.login
 
 import android.content.Intent
 import android.graphics.Color
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityUserLoginBinding
-import com.aspark.carebuddy.signup.SignUpUserActivity
-import com.aspark.carebuddy.view.user.UserHomeActivity
+import com.aspark.carebuddy.ui.signup.SignUpUserActivity
+import com.aspark.carebuddy.ui.home.UserHomeActivity
 
 class UserLoginActivity : AppCompatActivity() {
 
@@ -23,7 +23,8 @@ class UserLoginActivity : AppCompatActivity() {
         binding = ActivityUserLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //hideUserLoginError()
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val firebaseToken = preferences.getString("firebase_token", null)
 
         if (intent.getStringExtra("emailSent") != null) {
 
@@ -56,7 +57,7 @@ class UserLoginActivity : AppCompatActivity() {
            val sEmail = binding.userLoginEmail.text.toString()
            val sPassword = binding.userLoginPassword.text.toString()
 
-            viewModel.userLoginClickListener(sEmail,sPassword)
+            viewModel.userLoginClickListener(sEmail, sPassword, firebaseToken!!)
         }
 
         binding.signUpTextView.setOnClickListener {
