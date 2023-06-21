@@ -9,7 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
+<!--    TODO: remove clearTextTraffic to send request over only HTTPS-->
+
     <application
+        android:name=".di.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
