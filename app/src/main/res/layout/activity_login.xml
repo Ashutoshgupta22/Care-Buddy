@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.NurseLoginActivity">
+    tools:context=".ui.login.LoginActivity">
+
 
     <TextView
         android:id="@+id/textView0"
@@ -26,8 +27,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="30dp"
-        app:cardCornerRadius="4dp"
         android:visibility="invisible"
+        app:cardCornerRadius="4dp"
         android:padding="15dp"
         app:strokeColor="@color/purple_200"
         app:strokeWidth="1dp"
@@ -48,6 +49,7 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutEmail"
         android:layout_width="match_parent"
@@ -59,12 +61,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp">
 
-        <EditText
-            android:id="@+id/et_email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/email"
             android:textSize="18sp"
+            android:autofillHints="emailAddress"
             android:inputType="textEmailAddress"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"/>
 
@@ -81,19 +84,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp">
 
-        <EditText
-            android:id="@+id/et_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/password"
             android:textSize="18sp"
+            android:autofillHints="password"
             android:inputType="textPassword"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/bt_nurseLogin"
+        android:id="@+id/userLoginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
@@ -104,6 +108,20 @@
         android:layout_marginTop="60dp"
         tools:layout_editor_absoluteX="141dp"
         tools:layout_editor_absoluteY="298dp" />
+
+    <TextView
+        android:id="@+id/signUpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_user_signup"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="30dp"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="403dp" />
 
 
 

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.UserApi
+import com.aspark.carebuddy.api.Api
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.RetrofitService
@@ -13,14 +13,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserLoginViewModel: ViewModel() {
+class LoginViewModel: ViewModel() {
 
     private val mCallActivity = MutableLiveData<Boolean>()
     val callActivity: LiveData<Boolean> = mCallActivity
     private val mLoginErrorMessage = MutableLiveData<String>()
     val loginErrorMessage: LiveData<String> = mLoginErrorMessage
 
-    private val userApi = RetrofitService().retrofit.create(UserApi::class.java)
+    private val api = RetrofitService().retrofit.create(Api::class.java)
 
 
     fun userLoginClickListener(email: String, password: String, firebaseToken: String) {
@@ -41,7 +41,7 @@ class UserLoginViewModel: ViewModel() {
 
     private fun callLoginApi(loginRequest: LoginRequest, firebaseToken: String){
 
-        userApi.loginUser(loginRequest)
+        api.loginUser(loginRequest)
             .enqueue(object : Callback<User?> {
 
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
@@ -83,7 +83,7 @@ class UserLoginViewModel: ViewModel() {
 
         currentUser.firebaseToken = firebaseToken
 
-        userApi
+        api
             .setUserFirebaseToken(email, firebaseToken)
             .enqueue(object : Callback<Boolean> {
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {

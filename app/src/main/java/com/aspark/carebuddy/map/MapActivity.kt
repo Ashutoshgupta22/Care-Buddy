@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.aspark.carebuddy.databinding.ActivityMapBinding
-import com.aspark.carebuddy.ui.home.UserHomeActivity
+import com.aspark.carebuddy.ui.home.HomeActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
@@ -38,7 +38,7 @@ class MapActivity : AppCompatActivity() {
         viewModel.startActivity.observe(this){
 
             it?.let {
-                val intent = Intent(this, UserHomeActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }

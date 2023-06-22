@@ -2,7 +2,7 @@ package com.aspark.carebuddy.ui.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.UserApi
+import com.aspark.carebuddy.api.Api
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.retrofit.RetrofitService
@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserHomeViewModel: ViewModel() {
+class HomeViewModel: ViewModel() {
 
     fun bookServiceClickListener(){
 
@@ -23,7 +23,7 @@ class UserHomeViewModel: ViewModel() {
     private fun bookService() {
 
         val retrofitService = RetrofitService()
-        val userApi = retrofitService.retrofit.create(UserApi::class.java)
+        val api = retrofitService.retrofit.create(Api::class.java)
 
         //TODO why is location data needed
         val locationData = LocationData()
@@ -38,7 +38,7 @@ class UserHomeViewModel: ViewModel() {
         val request = BookServiceRequest(userEmail!!)
 
 
-        userApi.bookService(request)
+        api.bookService(request)
             .enqueue(object : Callback<Nurse?> {
 
                 override fun onResponse(call: Call<Nurse?>, response: Response<Nurse?>) {
