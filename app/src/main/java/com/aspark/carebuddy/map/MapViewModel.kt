@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.UserApi
+import com.aspark.carebuddy.api.Api
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.RetrofitService
 import com.aspark.carebuddy.retrofit.request.LocationData
@@ -40,7 +40,7 @@ class MapViewModel: ViewModel() {
     private fun saveLocation(latitude: Double, longitude: Double, pincode: String?) {
 
         val retrofitService = RetrofitService()
-        val userApi = retrofitService.retrofit.create(UserApi::class.java)
+        val api = retrofitService.retrofit.create(Api::class.java)
 
         val locationData = LocationData()
         locationData.latitude = latitude
@@ -50,7 +50,7 @@ class MapViewModel: ViewModel() {
         Log.i("MapViewModel", "saveLocation: getCurrentUser " + currentUser.email)
         locationData.email = currentUser.email
 
-        userApi.saveLocation(locationData)
+        api.saveLocation(locationData)
             .enqueue(object : Callback<Boolean> {
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 

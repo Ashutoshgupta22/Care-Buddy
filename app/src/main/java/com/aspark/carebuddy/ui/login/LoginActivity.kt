@@ -3,28 +3,43 @@ package com.aspark.carebuddy.ui.login
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.aspark.carebuddy.R
-import com.aspark.carebuddy.databinding.ActivityUserLoginBinding
-import com.aspark.carebuddy.ui.signup.SignUpUserActivity
-import com.aspark.carebuddy.ui.home.UserHomeActivity
+import com.aspark.carebuddy.databinding.ActivityLoginBinding
+import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.ui.signup.SignUpActivity
+import com.aspark.carebuddy.ui.home.HomeActivity
 
-class UserLoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUserLoginBinding
-    private val viewModel: UserLoginViewModel by viewModels()
+    private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityUserLoginBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        val firebaseToken = preferences.getString("firebase_token", null)
+        val isUserSignedIn = preferences.getBoolean("isUserSignedIn", false)
+
+        if (isUserSignedIn) {
+
+            val userEmail = preferences.getString("userEmail", null)
+            Log.d("LoginActivity", "onCreate: currentUser: $userEmail")
+
+            User.currentUser.email = userEmail
+
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
 
         if (intent.getStringExtra("emailSent") != null) {
 
@@ -37,7 +52,7 @@ class UserLoginActivity : AppCompatActivity() {
         viewModel.callActivity.observe(this) {
 
             val intent =
-                Intent(this, UserHomeActivity::class.java)
+                Intent(this, HomeActivity::class.java)
             //destroys all previous tasks
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -54,14 +69,16 @@ class UserLoginActivity : AppCompatActivity() {
 
         binding.userLoginBtn.setOnClickListener {
 
-           val sEmail = binding.userLoginEmail.text.toString()
-           val sPassword = binding.userLoginPassword.text.toString()
+            val firebaseToken = preferences.getString("firebase_token", null)
+
+            val sEmail = binding.userLoginEmail.text.toString()
+            val sPassword = binding.userLoginPassword.text.toString()
 
             viewModel.userLoginClickListener(sEmail, sPassword, firebaseToken!!)
         }
 
         binding.signUpTextView.setOnClickListener {
-            val intent = Intent(this, SignUpUserActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 

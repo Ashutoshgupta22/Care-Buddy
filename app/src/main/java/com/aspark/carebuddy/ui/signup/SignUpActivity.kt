@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.aspark.carebuddy.databinding.ActivitySignUpUserBinding
-import com.aspark.carebuddy.ui.login.UserLoginActivity
+import com.aspark.carebuddy.databinding.ActivitySignUpBinding
+import com.aspark.carebuddy.ui.login.LoginActivity
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import java.util.logging.Level
 import java.util.logging.Logger
 
-class SignUpUserActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignUpUserBinding
-    private val viewModel: SignUpUserViewModel by viewModels()
+    private lateinit var binding: ActivitySignUpBinding
+    private val viewModel: SignUpViewModel by viewModels()
 
     private var sName: String? = null
     var sAge: String? = null
@@ -26,7 +26,7 @@ class SignUpUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySignUpUserBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel.startActivity.observe(this){
@@ -34,7 +34,7 @@ class SignUpUserActivity : AppCompatActivity() {
 
                 if (it) {
                     val intent =
-                        Intent(this, UserLoginActivity::class.java)
+                        Intent(this, LoginActivity::class.java)
                     intent.putExtra("emailSent", "emailSent")
                     startActivity(intent)
                     finish()
@@ -74,7 +74,7 @@ class SignUpUserActivity : AppCompatActivity() {
     private fun showSignUpFailed(t:Throwable) {
 
         Toast.makeText(this, "Save Failed!!", Toast.LENGTH_LONG).show()
-        Logger.getLogger(SignUpUserActivity::class.java.name).log(Level.SEVERE,
+        Logger.getLogger(SignUpActivity::class.java.name).log(Level.SEVERE,
             "Error Occurred", t)
     }
 
@@ -99,7 +99,7 @@ class SignUpUserActivity : AppCompatActivity() {
             validInput = false
         } else {
             if (sPassword.length < 6) {
-                binding.userSignUpPassword.error = "Password should contain atleast 6 characters "
+                binding.userSignUpPassword.error = "Password should contain at least 6 characters "
                 validInput = false
             } else {
                 if (sPassword != sConfirmPassword) {

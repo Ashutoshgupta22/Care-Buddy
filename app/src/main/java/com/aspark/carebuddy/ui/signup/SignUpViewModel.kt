@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.UserApi
+import com.aspark.carebuddy.api.Api
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.retrofit.RetrofitService
 import org.json.JSONException
@@ -14,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
-class SignUpUserViewModel: ViewModel() {
+class SignUpViewModel: ViewModel() {
 
     private val mStartActivity = MutableLiveData<Boolean>()
     val startActivity : LiveData<Boolean>
@@ -28,9 +28,9 @@ class SignUpUserViewModel: ViewModel() {
 
     private fun callSignUpApi(user: User) {
 
-        val userApi = RetrofitService().retrofit.create(UserApi::class.java)
+        val api = RetrofitService().retrofit.create(Api::class.java)
 
-        userApi.registerUser(user)
+        api.registerUser(user)
             .enqueue(object : Callback<User> {
 
                 override fun onResponse(call: Call<User>, response: Response<User>) {

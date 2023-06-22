@@ -11,21 +11,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.aspark.carebuddy.databinding.ActivityUserHomeBinding
+import com.aspark.carebuddy.databinding.ActivityHomeBinding
 import com.aspark.carebuddy.map.MapActivity
 import com.aspark.carebuddy.model.User
-import com.aspark.carebuddy.ui.MainActivity
+import com.aspark.carebuddy.ui.login.LoginActivity
 
-class UserHomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private var isUserSignedIn = true
-    private lateinit var binding : ActivityUserHomeBinding
-    private val viewModel: UserHomeViewModel by viewModels()
+    private lateinit var binding : ActivityHomeBinding
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityUserHomeBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setIsUserSignedIn()
@@ -64,7 +64,7 @@ class UserHomeActivity : AppCompatActivity() {
         binding.signOutBtn.setOnClickListener {
 
             Log.w("UserHomeActivity", "onCreate: User Logged Out")
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
             isUserSignedIn = false
