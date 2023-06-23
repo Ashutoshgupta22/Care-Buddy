@@ -4,8 +4,9 @@ import android.content.Context
 import android.location.Location
 import android.util.Log
 import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.qualifiers.ActivityContext
 
-class LocationServicesProvider(val context: Context) {
+class LocationServicesProvider( @ActivityContext private val context: Context) {
 
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
@@ -32,7 +33,7 @@ class LocationServicesProvider(val context: Context) {
                         // It usually happens in emulator or new device. So open Maps at least once
                         // before calling this method.
 
-                        //TODO to prevent this use getCurrentLocation method instead of getLastLocation.
+                        //TODO to prevent this, use getCurrentLocation method instead of getLastLocation.
                         Log.e("LocationServiceProvider", "getLastLocation: " +
                                 "Error Occurred location is null")
 

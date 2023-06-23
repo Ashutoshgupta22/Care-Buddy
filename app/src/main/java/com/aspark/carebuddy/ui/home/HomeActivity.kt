@@ -15,7 +15,9 @@ import com.aspark.carebuddy.databinding.ActivityHomeBinding
 import com.aspark.carebuddy.map.MapActivity
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.ui.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private var isUserSignedIn = true

@@ -11,7 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface Api {
+interface UserApi {
 
     @POST("/api/user/registration")
     fun registerUser(@Body user: User): Call<User>

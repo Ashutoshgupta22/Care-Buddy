@@ -8,9 +8,10 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.aspark.carebuddy.R
+import com.aspark.carebuddy.retrofit.RetrofitService
 import dagger.hilt.android.qualifiers.ActivityContext
 
-open class NotificationClass(  private val context: Context) {
+open class NotificationClass( @ActivityContext private val context: Context) {
 
     init {
         registerNotificationChannel()
