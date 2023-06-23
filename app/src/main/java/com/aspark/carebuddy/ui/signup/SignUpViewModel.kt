@@ -1,75 +1,43 @@
 package com.aspark.carebuddy.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.Api
+import androidx.lifecycle.viewModelScope
 import com.aspark.carebuddy.model.User
-import com.aspark.carebuddy.retrofit.RetrofitService
-import org.json.JSONException
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
+import com.aspark.carebuddy.repository.Repository
+import com.aspark.carebuddy.retrofit.HttpStatusCode
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignUpViewModel: ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor( private val repo: Repository) : ViewModel() {
 
     private val mStartActivity = MutableLiveData<Boolean>()
-    val startActivity : LiveData<Boolean>
-        get() = mStartActivity
+    val startActivity : LiveData<Boolean> = mStartActivity
 
-    private val mSignUpFailedError = MutableLiveData<Throwable>()
-    val signUpFailedError : LiveData<Throwable>
-        get() = mSignUpFailedError
+    private val mSignUpFailedError = MutableLiveData<String>()
+    val signUpFailedError : LiveData<String> =  mSignUpFailedError
 
-    fun signUpClickListener(user: User) = callSignUpApi(user)
+    fun signUpClickListener(user: User) {
 
-    private fun callSignUpApi(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
 
-        val api = RetrofitService().retrofit.create(Api::class.java)
+            repo.signUp( user ) {
 
-        api.registerUser(user)
-            .enqueue(object : Callback<User> {
+                when(it) {
 
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    HttpStatusCode.OK -> mStartActivity.postValue(true)
 
-                    if (response.isSuccessful) {
+                    HttpStatusCode.FAILED ->
+                        mSignUpFailedError.postValue("Signup failed please try again later")
 
-                        Log.i("SignUpUserViewModel", "onResponse: " +
-                                "User registered successfully")
-                        //  userLoginView.showUserLoginError("Verification email sent successfully")
-
-                        mStartActivity.value = true
-
-                    } else {
-
-                        try {
-                            assert(response.errorBody() != null)
-                            val errorBody = response.errorBody()!!.string()
-                            val jsonObject = JSONObject(errorBody.trim { it <= ' ' })
-                            val errorMessage = jsonObject.getString("message")
-                            Log.w("TAG", "onResponse: Response Code=" + response.code())
-                            Log.w("TAG", "onResponse: Response Msg=$errorMessage")
-                            if (response.code() == 403) {
-                                //TODO show below toast
-                               // Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-                            }
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-                    }
+                    else -> {}
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
-
-                    mSignUpFailedError.value = t
-                }
-            })
+            }
+        }
     }
-
-
 }

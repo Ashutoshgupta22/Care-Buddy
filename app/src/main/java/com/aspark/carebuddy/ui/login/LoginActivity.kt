@@ -13,7 +13,9 @@ import com.aspark.carebuddy.databinding.ActivityLoginBinding
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.ui.signup.SignUpActivity
 import com.aspark.carebuddy.ui.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -46,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
             binding.tvLoginError.setTextColor(Color.GRAY)
             binding.tvLoginError.setText(R.string.email_verified_success)
             binding.cvLoginError.visibility = View.VISIBLE
-            // showUserLoginError("Verification email sent successfully");
         }
 
         viewModel.callActivity.observe(this) {

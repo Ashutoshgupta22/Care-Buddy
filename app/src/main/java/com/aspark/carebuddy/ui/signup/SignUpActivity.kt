@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aspark.carebuddy.databinding.ActivitySignUpBinding
 import com.aspark.carebuddy.ui.login.LoginActivity
 import com.aspark.carebuddy.model.User.Companion.currentUser
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.logging.Level
 import java.util.logging.Logger
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
@@ -71,11 +73,11 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSignUpFailed(t:Throwable) {
+    private fun showSignUpFailed( s: String) {
 
-        Toast.makeText(this, "Save Failed!!", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
         Logger.getLogger(SignUpActivity::class.java.name).log(Level.SEVERE,
-            "Error Occurred", t)
+            "Error Occurred")
     }
 
     private fun verifyInput(

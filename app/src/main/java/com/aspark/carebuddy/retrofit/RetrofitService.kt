@@ -4,18 +4,12 @@ import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitService {
+class RetrofitService private constructor(){
 
-    lateinit var retrofit: Retrofit
-        private set
+    companion object {
 
-    init {
-        initializeRetrofit()
-    }
-
-    private fun initializeRetrofit() {
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:8080") //ip address and server port number
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.1.2:8080") //ip address and server port number
             .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
     }

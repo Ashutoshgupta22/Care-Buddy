@@ -1,15 +1,8 @@
 package com.aspark.carebuddy.notification
 
-import android.app.Notification
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
-import androidx.core.app.NotificationManagerCompat
-import com.aspark.carebuddy.R
-import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 class FirebaseNotificationService: FirebaseMessagingService(){
 
@@ -29,7 +22,7 @@ class FirebaseNotificationService: FirebaseMessagingService(){
         Log.i("FirebaseNotificationService", "onMessageReceived: " +
                 "notification received from firebase")
 
-        val title = message.notification?.title
-        val description = message.notification?.body
+//        val title = message.notification?.title
+//        val description = message.notification?.body
     }
 }

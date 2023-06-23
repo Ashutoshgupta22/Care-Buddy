@@ -17,9 +17,11 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.util.Locale
 
+@AndroidEntryPoint
 class MapActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMapBinding

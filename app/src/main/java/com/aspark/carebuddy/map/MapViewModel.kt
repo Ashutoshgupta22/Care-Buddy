@@ -5,72 +5,54 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aspark.carebuddy.api.Api
+import androidx.lifecycle.viewModelScope
 import com.aspark.carebuddy.model.User.Companion.currentUser
-import com.aspark.carebuddy.retrofit.RetrofitService
+import com.aspark.carebuddy.repository.Repository
+import com.aspark.carebuddy.retrofit.HttpStatusCode
 import com.aspark.carebuddy.retrofit.request.LocationData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MapViewModel: ViewModel() {
+@HiltViewModel
+class MapViewModel @Inject constructor( private val repo: Repository): ViewModel() {
 
     private val mLastLocation = MutableLiveData<Location>()
-     val lastLocation: LiveData<Location>
-        get() = mLastLocation
+     val lastLocation: LiveData<Location> = mLastLocation
     private val mStartActivity = MutableLiveData<Boolean>()
-    val startActivity: LiveData<Boolean>
-        get() = mStartActivity
+    val startActivity: LiveData<Boolean> = mStartActivity
 
     fun getLastLocation( locationServicesProvider: LocationServicesProvider) {
 
-        locationServicesProvider.getLastLocation{
+        viewModelScope.launch(Dispatchers.Default) {
 
-            mLastLocation.value = it
+            locationServicesProvider.getLastLocation{
+
+                mLastLocation.postValue(it)
+            }
         }
+
     }
 
     fun confirmLocationClickListener(location: Location, pincode: String?) {
 
         Log.i("MapViewModel", "confirmLocationClickListener: called")
 
-        saveLocation(location.latitude, location.longitude, pincode)
-    }
+        val locationData = LocationData( location.latitude, location.longitude,
+            pincode, currentUser.email)
 
-    private fun saveLocation(latitude: Double, longitude: Double, pincode: String?) {
+        viewModelScope.launch( Dispatchers.IO ) {
 
-        val retrofitService = RetrofitService()
-        val api = retrofitService.retrofit.create(Api::class.java)
+            repo.saveLocation(locationData) {
 
-        val locationData = LocationData()
-        locationData.latitude = latitude
-        locationData.longitude = longitude
-        locationData.pincode = pincode
+                when(it) {
 
-        Log.i("MapViewModel", "saveLocation: getCurrentUser " + currentUser.email)
-        locationData.email = currentUser.email
+                    HttpStatusCode.OK -> mStartActivity.postValue(true)
 
-        api.saveLocation(locationData)
-            .enqueue(object : Callback<Boolean> {
-                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-
-                    //TODO showing response successful when currentUser is null.
-                    if (response.isSuccessful && response.body() == true) {
-
-                        Log.i("MapViewModel", "onResponse: saveLocation Successful")
-                        mStartActivity.value = true
-
-                    } else {
-                        Log.e("MapViewModel",
-                            "onResponse: saveLocation Response FAILED code= " +
-                                    response.code() + response.message())
-                    }
+                    else -> {}
                 }
-
-                override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                    Log.e("MapViewModel", "onFailure: saveLocation FAILED: " + t.message)
-                }
-            })
+            }
+        }
     }
-
 }
