@@ -49,12 +49,12 @@ class Repository @Inject constructor( private val userApi: UserApi) {
 
     fun signUp(user: User, callback: (HttpStatusCode) -> Unit) {
 
-        userApi.registerUser(user)
-            .enqueue(object : Callback<User> {
+        userApi.signUp(user)
+            .enqueue(object : Callback<Boolean> {
 
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful ) {
 
                         Log.i("Repository", "onResponse: " +
                                 "User registered successfully")
@@ -64,27 +64,31 @@ class Repository @Inject constructor( private val userApi: UserApi) {
 
                     } else {
 
-                        try {
-                            assert(response.errorBody() != null)
-                            val errorBody = response.errorBody()!!.string()
-                            val jsonObject = JSONObject(errorBody.trim { it <= ' ' })
-                            val errorMessage = jsonObject.getString("message")
-                            Log.w("TAG", "onResponse: Response Code=" + response.code())
-                            Log.w("TAG", "onResponse: Response Msg=$errorMessage")
+//                        try {
+//                            assert(response.errorBody() != null)
+//                            val errorBody = response.errorBody()!!.string()
+//                            val jsonObject = JSONObject(errorBody.trim { it <= ' ' })
+//                            val errorMessage = jsonObject.getString("message")
+//                            Log.w("TAG", "onResponse: Response Code=" + response.code())
+//                            Log.w("TAG", "onResponse: Response Msg=$errorMessage")
+//
+//                            if (response.code() == 403) {
+//                                //TODO show below toast
+//                                // Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+//                            }
+//                        } catch (e: IOException) {
+//                            e.printStackTrace()
+//                        } catch (e: JSONException) {
+//                            e.printStackTrace()
+//                        }
+                        if ( response.code() == HttpStatusCode.FORBIDDEN.code)
+                            Log.e("Repository", "onResponse: FORBIDDEN ")
 
-                            if (response.code() == 403) {
-                                //TODO show below toast
-                                // Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-                            }
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
+
                     }
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
 
                     //mSignUpFailedError.value = t
                     callback(HttpStatusCode.FAILED)

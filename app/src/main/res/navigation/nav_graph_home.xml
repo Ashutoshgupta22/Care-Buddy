@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/homeFrag">
+
+    <fragment
+        android:id="@+id/homeFrag"
+        android:name="com.aspark.carebuddy.ui.home.HomeFrag"
+        android:label="HomeFrag" />
+    <fragment
+        android:id="@+id/chatFrag"
+        android:name="com.aspark.carebuddy.ui.ChatFrag"
+        android:label="ChatFrag" />
+    <fragment
+        android:id="@+id/notificationFrag"
+        android:name="com.aspark.carebuddy.ui.NotificationFrag"
+        android:label="NotificationFrag" />
+    <fragment
+        android:id="@+id/accountFrag"
+        android:name="com.aspark.carebuddy.ui.AccountFrag"
+        android:label="AccountFrag" />
+</navigation>
