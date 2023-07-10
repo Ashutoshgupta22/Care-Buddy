@@ -23,6 +23,11 @@ class HomeFrag: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        //shows search view when search bar is clicked
+        binding.searchView.setupWithSearchBar(binding.searchBar)
+
+        binding.viewPagerUpcoming.adapter = UpcomingBookingAdapter(arrayListOf())
+        binding.indicatorWormDots.attachTo(binding.viewPagerUpcoming)
 
     }
 }

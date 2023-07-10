@@ -1,7 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_greetings"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="18sp"
+        android:layout_marginTop="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="51dp"
+        android:src="@drawable/emoji_waving_hand" />
+
+    <TextView
+        android:id="@+id/text_greetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello!"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_greetings"
+        android:layout_marginTop="18sp"
+        android:layout_marginStart="10dp"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="John Doe"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/text_greetings"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="18sp"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Search"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name">
+    </com.google.android.material.search.SearchBar>
+
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Widget.Material3.SearchView"
+        app:layout_anchor="@id/search_bar">
+
+    </com.google.android.material.search.SearchView>
+
+
+    <TextView
+        android:id="@+id/text_upcoming_bookings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upcoming bookings"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/search_bar"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_upcoming_bookings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/text_upcoming_bookings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_upcoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/indicator_worm_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_pager_upcoming"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            app:dotsColor="@color/primary_blue"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="12dp"
+            app:dotsSpacing="4dp"
+            app:dotsStrokeColor="@color/primary_blue"
+            app:dotsStrokeWidth="2dp" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/text_top_nurses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top nurses near you"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_upcoming_bookings"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
