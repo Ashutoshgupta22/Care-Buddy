@@ -3,6 +3,7 @@
     android:id="@+id/cv_upcoming_bookings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     style="@style/Widget.Material3.CardView.Outlined"
     app:layout_constraintTop_toBottomOf="@id/text_upcoming_bookings"
     app:layout_constraintStart_toStartOf="parent"

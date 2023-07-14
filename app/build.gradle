@@ -39,6 +39,13 @@ android {
 
 dependencies {
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+
+    // flexbox
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
     //dots indicator
     implementation "com.tbuonomo:dotsindicator:5.0"
 
