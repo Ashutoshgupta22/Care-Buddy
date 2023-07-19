@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="120dp"
             tools:layout_editor_absoluteY="118dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/ic_launcher_background"/>
 
     </com.google.android.material.card.MaterialCardView>
 

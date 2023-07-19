@@ -4,6 +4,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+
 }
 
 android {
@@ -62,7 +64,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.0'
 
     //by viewModels()
     implementation 'androidx.fragment:fragment-ktx:1.6.0'

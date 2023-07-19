@@ -1,8 +1,10 @@
 package com.aspark.carebuddy.ui.home
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.ItemTopNursesBinding
 import com.aspark.carebuddy.model.Nurse
@@ -22,6 +24,18 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
         val nurseName = binding.tvTopNurseName
         val nurseRating = binding.tvRating
         val rvServiceTags = binding.rvTopNurseServices
+        val cvTopNurse = binding.cvTopNurses
+
+                init {
+
+                    cvTopNurse.setOnClickListener {
+
+                        Log.d("TopNurseAdapter", "Top nurse card clicked")
+                        val navController = binding.root.findNavController()
+                        val action = HomeFragDirections.actionHomeFragToSecondActivity()
+                        navController.navigate(action)
+                    }
+                }
     }
 
     override fun onCreateViewHolder(
@@ -45,6 +59,7 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
             layoutManager = flexboxLayoutManager
             adapter = NurseServiceTagAdapter(arrayListOf("Baby care","Alzheimer's","Post Surgery"))
         }
+
 
     }
 
