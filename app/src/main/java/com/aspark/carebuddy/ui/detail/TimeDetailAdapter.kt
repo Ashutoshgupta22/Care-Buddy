@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.R
-import com.aspark.carebuddy.databinding.ItemSpecialitiesDetailBinding
 import com.aspark.carebuddy.databinding.ItemTimeDetailBinding
 
 class TimeDetailAdapter(private val timeList: ArrayList<String>):
@@ -62,7 +61,7 @@ class TimeDetailAdapter(private val timeList: ArrayList<String>):
 
         else {
             holder.cvTime.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-            holder.tvTime.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            holder.tvTime.setTextColor(ColorStateList.valueOf(Color.DKGRAY))
 
         }
 

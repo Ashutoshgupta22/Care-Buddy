@@ -18,6 +18,8 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class DetailFrag : Fragment() {
@@ -36,10 +38,6 @@ class DetailFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val navController = view.findNavController()
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFrag))
-        binding.toolbarDetailFrag.setupWithNavController(navController, appBarConfiguration)
-
         binding.rvSpecialitiesNurse.apply {
 
             val flexLayout = FlexboxLayoutManager(this@DetailFrag.requireContext(),
@@ -55,15 +53,13 @@ class DetailFrag : Fragment() {
             adapter = TimeDetailAdapter(arrayListOf())
         }
 
+
+        val calendar = Calendar.getInstance()
+        var dayMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        var month = calendar.get(Calendar.MONTH)
+        var year = calendar.get(Calendar.YEAR)
+
         binding.tvDate.setOnClickListener {
-
-            val calendar = Calendar.getInstance()
-            val dayMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            val month = calendar.get(Calendar.MONTH)
-            val year = calendar.get(Calendar.YEAR)
-
-            Log.d("DetailFrag", "onViewCreated: Now date: $dayMonth $month $year")
-
 
             val datePickerDialog = DatePickerDialog(requireContext(),
                 { _, selectedYear, selectedMonth, selectedDayOfMonth ->
@@ -71,6 +67,12 @@ class DetailFrag : Fragment() {
                     Log.d("DetailFrag", "onViewCreated: Now date: " +
                             "$selectedDayOfMonth $selectedMonth $selectedYear")
 
+                    binding.tvDate.text = formatDate(selectedDayOfMonth,
+                        selectedMonth+1, selectedYear)
+
+                    dayMonth = selectedDayOfMonth
+                    month = selectedMonth
+                    year = selectedYear
 
                 }, year, month, dayMonth)
 
@@ -78,6 +80,26 @@ class DetailFrag : Fragment() {
             datePickerDialog.show()
 
         }
+    }
+
+    private fun formatDate(day: Int, month: Int, year: Int): String {
+
+
+        var sDay: String = day.toString()
+        var sMonth: String = month.toString()
+
+        if(sDay.length == 1)
+            sDay = "0$sDay"
+
+        if (sMonth.length == 1)
+            sMonth = "0$sMonth"
+
+        val date = "$sDay $sMonth, $year"
+
+        val inputFormat = DateTimeFormatter.ofPattern("dd MM, yyyy")
+        val outputFormat = DateTimeFormatter.ofPattern("dd MMM, yyyy")
+        val parsedDate = LocalDate.parse(date, inputFormat)
+        return outputFormat.format(parsedDate)
     }
 
 }

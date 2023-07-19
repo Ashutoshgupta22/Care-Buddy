@@ -23,6 +23,7 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.SecondActivity"
+            android:parentActivityName=".ui.home.HomeActivity"
             android:exported="false" />
 
         <service
