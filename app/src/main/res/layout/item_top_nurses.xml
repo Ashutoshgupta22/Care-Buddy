@@ -10,7 +10,7 @@
         android:id="@+id/cv_top_nurses"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
+        android:layout_margin="8dp"
         android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

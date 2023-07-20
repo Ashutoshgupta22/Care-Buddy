@@ -1,10 +1,12 @@
-package com.aspark.carebuddy.ui
+package com.aspark.carebuddy.ui.account
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.FragmentAccountBinding
 
 class AccountFrag: Fragment() {
@@ -22,6 +24,14 @@ class AccountFrag: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.rvAccountSetting.apply {
+
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = AccountSettingAdapter(arrayListOf("Patient profile", "Previous bookings",
+                "Logout"))
+
+        }
 
 
     }

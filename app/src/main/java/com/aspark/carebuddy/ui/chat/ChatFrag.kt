@@ -1,15 +1,15 @@
-package com.aspark.carebuddy.ui
+package com.aspark.carebuddy.ui.chat
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.aspark.carebuddy.databinding.FragmentNotificationBinding
+import com.aspark.carebuddy.databinding.FragmentChatBinding
 
-class NotificationFrag: Fragment() {
+class ChatFrag: Fragment() {
 
-    private lateinit var binding: FragmentNotificationBinding
+    private lateinit var binding: FragmentChatBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,7 +17,7 @@ class NotificationFrag: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentNotificationBinding.inflate(inflater, container, false)
+        binding = FragmentChatBinding.inflate(inflater, container, false)
         return binding.root
 
     }

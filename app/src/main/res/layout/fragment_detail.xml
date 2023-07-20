@@ -8,7 +8,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.detail.DetailFrag">
+        tools:context=".ui.detail.DetailFrag"
+        android:paddingBottom="16dp">
 
 
         <com.google.android.material.card.MaterialCardView
@@ -178,6 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Book Appointment"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_time_detail"

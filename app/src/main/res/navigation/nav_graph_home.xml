@@ -16,15 +16,15 @@
 
     <fragment
         android:id="@+id/chatFrag"
-        android:name="com.aspark.carebuddy.ui.ChatFrag"
+        android:name="com.aspark.carebuddy.ui.chat.ChatFrag"
         android:label="ChatFrag" />
     <fragment
         android:id="@+id/notificationFrag"
-        android:name="com.aspark.carebuddy.ui.NotificationFrag"
+        android:name="com.aspark.carebuddy.ui.notification.NotificationFrag"
         android:label="NotificationFrag" />
     <fragment
         android:id="@+id/accountFrag"
-        android:name="com.aspark.carebuddy.ui.AccountFrag"
+        android:name="com.aspark.carebuddy.ui.account.AccountFrag"
         android:label="AccountFrag" />
     <activity
         android:id="@+id/secondActivity"
