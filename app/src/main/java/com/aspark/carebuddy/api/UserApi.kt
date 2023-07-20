@@ -13,8 +13,8 @@ import retrofit2.http.Path
 
 interface UserApi {
 
-    @POST("/api/user/registration")
-    fun registerUser(@Body user: User): Call<User>
+    @POST("/api/user/signup")
+    fun signUp(@Body user: User): Call<Boolean>
 
     @POST("/api/user/login")
     fun loginUser(@Body loginRequest: LoginRequest): Call<User?>

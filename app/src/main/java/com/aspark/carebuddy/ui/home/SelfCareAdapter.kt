@@ -1,0 +1,62 @@
+package com.aspark.carebuddy.ui.home
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.aspark.carebuddy.databinding.ItemSelfCareBinding
+import com.aspark.carebuddy.databinding.ItemTopNursesBinding
+import com.aspark.carebuddy.model.Nurse
+import com.aspark.carebuddy.model.SelfCareModel
+import com.bumptech.glide.Glide
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+
+class SelfCareAdapter(private val selfCareList: ArrayList<SelfCareModel>):
+    RecyclerView.Adapter<SelfCareAdapter.ViewHolder>() {
+
+    private lateinit var context: Context
+
+    class ViewHolder(binding: ItemSelfCareBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        val selfCarePic = binding.ivSelfCarePic
+        val selfCareHeadline = binding.tvSelfCareHeadline
+        val selfCareDescription = binding.tvSelfCareDescription
+        val selfCareSource = binding.tvSelfCareSource
+
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
+
+        context = parent.context
+        val binding = ItemSelfCareBinding.inflate(
+            LayoutInflater.from(context),
+            parent, false
+        )
+
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+//        Glide
+//            .with(context)
+//            .load(selfCareList[position].picUrl)
+//            .centerCrop()
+//            .into(holder.selfCarePic)
+//
+//        holder.selfCareHeadline.text = selfCareList[position].headLine
+//        holder.selfCareDescription.text = selfCareList[position].description
+//        holder.selfCareSource.text = selfCareList[position].source
+
+    }
+
+    override fun getItemCount(): Int {
+        return 4
+    }
+}

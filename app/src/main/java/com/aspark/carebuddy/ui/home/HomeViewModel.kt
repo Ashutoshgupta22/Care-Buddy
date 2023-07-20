@@ -12,13 +12,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor( private val repo: Repository) : ViewModel() {
 
-    fun bookServiceClickListener(){
+//    fun bookServiceClickListener(){
+//
+//        viewModelScope.launch(Dispatchers.IO) {
+//
+//            repo.bookService()
+//        }
+//    }
 
-        viewModelScope.launch(Dispatchers.IO) {
 
-            repo.bookService()
-        }
-
-    }
 
 }

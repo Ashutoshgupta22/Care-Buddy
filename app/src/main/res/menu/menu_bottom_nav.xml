@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFrag"
+        android:title="Home"
+        android:icon="@drawable/ic_home_outline"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/chatFrag"
+        android:title="Chat"
+        android:icon="@drawable/ic_chat_outline"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/notificationFrag"
+        android:title="Notification"
+        android:icon="@drawable/ic_notification_outline"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/accountFrag"
+        android:title="Account"
+        android:icon="@drawable/ic_account_outline"
+        app:showAsAction="always"/>
+
+</menu>

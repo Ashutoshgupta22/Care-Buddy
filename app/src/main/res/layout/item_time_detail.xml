@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cv_time_detail"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    style="@style/Widget.Material3.CardView.Elevated"
+    android:layout_marginStart="8dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="8dp">
+
+    <TextView
+        android:id="@+id/tv_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11:00 AM"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+    </TextView>
+
+</androidx.cardview.widget.CardView>

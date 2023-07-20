@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.detail.DetailFrag"
+        android:paddingBottom="16dp">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_profile_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            app:cardCornerRadius="26dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_profile_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_launcher_background"
+                tools:layout_editor_absoluteX="120dp"
+                tools:layout_editor_absoluteY="118dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Jane Doe"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/cv_profile_pic"
+            app:layout_constraintTop_toTopOf="@id/cv_profile_pic"
+            tools:layout_editor_absoluteX="202dp"
+            tools:layout_editor_absoluteY="131dp" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
+            android:text="4.5"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@id/cv_profile_pic"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_name" />
+
+
+        <ImageView
+            android:id="@+id/iv_rating"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@id/tv_rating"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
+            app:srcCompat="@drawable/ic_rating" />
+
+        <TextView
+            android:id="@+id/text_biography"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Biography"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_pic"
+            tools:layout_editor_absoluteX="75dp"
+            tools:layout_editor_absoluteY="238dp" />
+
+        <TextView
+            android:id="@+id/tv_biography_nurse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="This is a dummy biography for a nurse registered in care buddy app. She has 8 years of experience with several reputed hospitals like Apollo and Fortis."
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_biography" />
+
+        <TextView
+            android:id="@+id/text_specialities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Specialities"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_biography_nurse"
+            tools:layout_editor_absoluteX="75dp"
+            tools:layout_editor_absoluteY="238dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_specialities_nurse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_specialities"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="397dp" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_specialities_nurse"
+            tools:layout_editor_absoluteX="75dp"
+            tools:layout_editor_absoluteY="238dp" />
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Select Date"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:padding="18dp"
+            android:background="@drawable/bg_date_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_date" />
+
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Time"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            tools:layout_editor_absoluteX="75dp"
+            tools:layout_editor_absoluteY="238dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_time_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_time" />
+
+        <Button
+            android:id="@+id/btn_book_appointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Book Appointment"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_time_detail"
+            tools:layout_editor_absoluteX="95dp"
+            tools:layout_editor_absoluteY="204dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
