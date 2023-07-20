@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private var isUserSignedIn = true
     private lateinit var binding : ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
@@ -38,8 +37,6 @@ class HomeActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
-
-        setIsUserSignedIn()
 
         Log.i("UserHomeActivity", "onCreate: currentUser: " + User.currentUser)
 
@@ -157,17 +154,4 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    private fun setIsUserSignedIn() {
-
-        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        val editor = preferences.edit()
-
-        Log.i("UserHomeActivity", "setIsUserSignedIn: isUserSignedIn $isUserSignedIn")
-        editor.putBoolean("isUserSignedIn", isUserSignedIn)
-
-        if (isUserSignedIn) editor.putString("userEmail", User.currentUser.email)
-        else editor.putString("userEmail", null)
-
-        editor.apply()
-    }
 }

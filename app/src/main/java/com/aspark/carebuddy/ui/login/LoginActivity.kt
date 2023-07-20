@@ -28,11 +28,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        val isUserSignedIn = preferences.getBoolean("isUserSignedIn", false)
+        val isUserSignedIn = preferences.getBoolean("is_user_signed_in", false)
 
         if (isUserSignedIn) {
 
-            val userEmail = preferences.getString("userEmail", null)
+            val userEmail = preferences.getString("user_email", null)
             Log.d("LoginActivity", "onCreate: currentUser: $userEmail")
 
             User.currentUser.email = userEmail
@@ -59,6 +59,8 @@ class LoginActivity : AppCompatActivity() {
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
+
+            setUserSignedIn()
         }
 
         viewModel.loginErrorMessage.observe(this){
@@ -100,5 +102,16 @@ class LoginActivity : AppCompatActivity() {
 
      private fun hideUserLoginError() {
         binding.cvLoginError.visibility = View.INVISIBLE
+    }
+
+
+    private fun setUserSignedIn() {
+
+        val preferences = getSharedPreferences(packageName, MODE_PRIVATE)
+        val editor = preferences.edit()
+
+        editor.putBoolean("is_user_signed_in", true)
+        editor.putString("user_email", User.currentUser.email)
+        editor.apply()
     }
 }

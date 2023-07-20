@@ -4,6 +4,7 @@ import android.util.Log
 import com.aspark.carebuddy.api.UserApi
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.HttpStatusCode
 import com.aspark.carebuddy.retrofit.request.BookServiceRequest
 import com.aspark.carebuddy.retrofit.request.LocationData
@@ -112,12 +113,12 @@ class Repository @Inject constructor( private val userApi: UserApi) {
                         User.currentUser = response.body()!!
 
                         Log.i("Repository", "onResponse: " +
-                                "current user name ${User.currentUser.name}")
+                                "current user email ${currentUser.email}")
 
                         //mCallActivity.value = true
                         callback(HttpStatusCode.OK)
 
-                        setFirebaseToken(loginRequest.email, firebaseToken)
+                        setFirebaseToken(currentUser.email!!, firebaseToken)
                     }
 
                     else if (response.code() == HttpStatusCode.UNAUTHORIZED.code){
