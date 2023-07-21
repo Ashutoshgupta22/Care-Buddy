@@ -2,18 +2,19 @@ package com.aspark.carebuddy.model
 
 class Nurse {
 
-
     var id =  0
-    var name: String? = null
+    var name: String = ""
     var age = 0
-    var email: String? = null
-    var password: String? = null
-    var pincode: String? = null
-    var firebaseToken: String? = null
+    var email: String = ""
+    var pincode: String = ""
+    var firebaseToken: String = ""
     var latitude = 0.0
     var longitude = 0.0
     var userRole : String? = null
-    var locked = false
-    var enabled = false
+    var biography: String = ""
+    var specialitiesList = arrayListOf<String>()
+    var ratings: Double = 0.0
+    var patientNo: Int = 0
+    var experience: Int = 0
 
 }

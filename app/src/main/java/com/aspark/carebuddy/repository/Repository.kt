@@ -22,7 +22,7 @@ class Repository @Inject constructor( private val userApi: UserApi) {
 
     fun bookService() {
 
-         val userEmail = User.currentUser.email
+         val userEmail = currentUser.email
          val request = BookServiceRequest(userEmail!!)
 
          Log.d("Repository", "bookService: " +
@@ -147,7 +147,7 @@ class Repository @Inject constructor( private val userApi: UserApi) {
 
     private fun setFirebaseToken(email: String, firebaseToken: String) {
 
-        User.currentUser.firebaseToken = firebaseToken
+        currentUser.firebaseToken = firebaseToken
 
         userApi
             .setUserFirebaseToken(email, firebaseToken)
@@ -194,5 +194,31 @@ class Repository @Inject constructor( private val userApi: UserApi) {
             })
     }
 
+    fun getUserdata(email: String, callback: (HttpStatusCode) -> Unit) {
 
+        userApi
+            .getUserData(email)
+            .enqueue(object : Callback<User> {
+
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                    if(response.isSuccessful && response.body() != null) {
+
+                        currentUser = response.body()!!
+                        callback(HttpStatusCode.OK)
+                    }
+                    else  {
+                        Log.e("Repository", "onResponse: getUserData " +
+                                "Response unsuccessful" )
+                        callback(HttpStatusCode.FAILED)
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+
+                    Log.e("Repository", "onFailure: getUserdata failed", t)
+                    callback(HttpStatusCode.FAILED)
+                }
+            })
+    }
 }

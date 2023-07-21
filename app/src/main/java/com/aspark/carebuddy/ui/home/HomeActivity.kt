@@ -3,7 +3,6 @@ package com.aspark.carebuddy.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -17,7 +16,7 @@ import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityHomeBinding
 import com.aspark.carebuddy.map.MapActivity
 import com.aspark.carebuddy.model.User
-import com.aspark.carebuddy.ui.login.LoginActivity
+import com.aspark.carebuddy.model.User.Companion.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +28,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        currentUser.email?.let {
+            Log.d("HomeActivity", "onCreate: getting user data ")
+            viewModel.getUserdata(it)
+        }
+
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -37,8 +41,6 @@ class HomeActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
-
-        Log.i("UserHomeActivity", "onCreate: currentUser: " + User.currentUser)
 
         //check if notification permission granted
         if (ContextCompat.checkSelfPermission(this,
@@ -56,7 +58,8 @@ class HomeActivity : AppCompatActivity() {
         else {
             Log.e("UserHomeActivity", "onCreate: Checked notification " +
                     "permission was denied " )
-            showNotificationPermissionDialog()
+            //showNotificationPermissionDialog()
+            showPermissionDialog()
         }
 
         //check if location permission granted
@@ -65,57 +68,48 @@ class HomeActivity : AppCompatActivity() {
             Log.i("UserHomeActivity", "onCreate: Checked location permission granted")
 
         else {
-            Log.e("UserHomeActivity", "onCreate: Checked location permission was denied " )
-            showLocationPermissionDialog()
+            Log.e("UserHomeActivity", "onCreate: Checked location permission was denied ")
+            showPermissionDialog()
         }
 
-//        binding.signOutBtn.setOnClickListener {
-//
-//            Log.w("UserHomeActivity", "onCreate: User Logged Out")
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//
-//            isUserSignedIn = false
-//            setIsUserSignedIn()
-//            finish()
-//        }
-
-
-//        binding.bookServiceBtn.setOnClickListener {
-//
-//            Log.d("UserHomeActivity", "bookService: button clicked ")
-//            viewModel.bookServiceClickListener()
-//        }
-    }
-
-    private fun showNotificationPermissionDialog(){
-
-        val notificationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()){ isGranted: Boolean ->
-
-            if (isGranted){
-
-                Log.d("UserHomeActivity", "showNotificationPermissionDialog: " +
-                        "notification permission granted ")
-
-            }
-            else{
-
-                Log.e("UserHomeActivity", "showNotificationPermissionDialog: " +
-                        "notification permission denied")
+        viewModel.showToast.observe(this) {
+            it?.let {
+                showToast(it)
             }
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // no need to ask notification permission for android version below 13
-           // notificationPermissionRequest.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-
     }
 
-    private fun showLocationPermissionDialog() {
+//    private fun showNotificationPermissionDialog(){
+//
+//        val notificationPermissionRequest = registerForActivityResult(
+//            ActivityResultContracts.RequestPermission()){ isGranted: Boolean ->
+//
+//            if (isGranted){
+//
+//                Log.d("UserHomeActivity", "showNotificationPermissionDialog: " +
+//                        "notification permission granted ")
+//
+//            }
+//            else{
+//
+//                Log.e("UserHomeActivity", "showNotificationPermissionDialog: " +
+//                        "notification permission denied")
+//            }
+//        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            // no need to ask notification permission for android version below 13
+//           // notificationPermissionRequest.launch(Manifest.permission.POST_NOTIFICATIONS)
+//        }
+//
+//    }
 
-        val locationPermissionRequest = registerForActivityResult(
+    private fun showPermissionDialog() {
+
+        //can not ask two different permissions separately.
+        //hence location and notification permission both dialog are requested at same time
+
+        val permissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean?> ->
 
             val fineLocationGranted =
@@ -146,12 +140,18 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-        locationPermissionRequest.launch(
+        permissionRequest.launch(
             arrayOf(
                 Manifest.permission.POST_NOTIFICATIONS,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
         )
     }
+
+    private fun showToast(msg: String) {
+
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
 
 }

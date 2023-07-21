@@ -14,4 +14,9 @@
     <string name="invalid_email_or_password">Invalid email or password</string>
     <string name="sign_out">Sign Out</string>
     <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="upcoming_bookings">Upcoming bookings</string>
+    <string name="top_nurses_near_you">Top nurses near you</string>
+    <string name="self_care">Self Care</string>
+    <string name="hello">Hello!</string>
 </resources>

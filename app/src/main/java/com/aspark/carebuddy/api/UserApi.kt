@@ -27,7 +27,7 @@ interface UserApi {
     fun saveLocation(@Body locationData: LocationData): Call<Boolean>
 
     @GET("/api/user/get-user/{email}")
-    fun getUserData(@Path(value = "email") email: String): Call<Map<String, Any>>
+    fun getUserData(@Path(value = "email") email: String): Call<User>
 
     @POST("/api/user/book-service")
     fun bookService(@Body request: BookServiceRequest): Call<Nurse>

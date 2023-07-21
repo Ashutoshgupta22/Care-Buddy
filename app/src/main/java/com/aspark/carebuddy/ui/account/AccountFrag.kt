@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.FragmentAccountBinding
+import com.aspark.carebuddy.model.User.Companion.currentUser
 
 class AccountFrag: Fragment() {
 
@@ -24,6 +25,8 @@ class AccountFrag: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.tvAccountName.text = currentUser.name
 
         binding.rvAccountSetting.apply {
 
