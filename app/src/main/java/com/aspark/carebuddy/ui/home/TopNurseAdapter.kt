@@ -20,9 +20,9 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
 
     class MyViewHolder(binding: ItemTopNursesBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val nursePic = binding.ivTopNursePic
-        val nurseName = binding.tvTopNurseName
-        val nurseRating = binding.tvRating
+        val ivNursePic = binding.ivTopNursePic
+        val tvNurseName = binding.tvTopNurseName
+        val tvNurseRating = binding.tvRating
         val rvServiceTags = binding.rvTopNurseServices
         val cvTopNurse = binding.cvTopNurses
 
@@ -52,6 +52,9 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
+        holder.tvNurseName.text = nurseList[position].name
+        holder.tvNurseRating.text = nurseList[position].rating.toString()
+
         holder.rvServiceTags.apply {
            val flexboxLayoutManager = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP)
                 flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
@@ -59,11 +62,9 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
             layoutManager = flexboxLayoutManager
             adapter = NurseServiceTagAdapter(arrayListOf("Baby care","Alzheimer's","Post Surgery"))
         }
-
-
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return nurseList.size
     }
 }

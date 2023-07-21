@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityHomeBinding
 import com.aspark.carebuddy.map.MapActivity
-import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +31,8 @@ class HomeActivity : AppCompatActivity() {
             Log.d("HomeActivity", "onCreate: getting user data ")
             viewModel.getUserdata(it)
         }
+
+        viewModel.getSelfCare()
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

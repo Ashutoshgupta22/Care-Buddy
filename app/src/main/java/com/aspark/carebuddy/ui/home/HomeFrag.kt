@@ -41,7 +41,7 @@ class HomeFrag: Fragment() {
             layoutManager = LinearLayoutManager(this@HomeFrag.requireContext(),
                 RecyclerView.HORIZONTAL, false)
 
-            adapter = TopNurseAdapter(arrayListOf())
+          //  adapter = TopNurseAdapter(arrayListOf())
 
         }
 
@@ -62,6 +62,13 @@ class HomeFrag: Fragment() {
 
                     binding.tvName.text = currentUser.name
                 }
+            }
+        }
+
+        viewModel.topNurseList.observe(viewLifecycleOwner) {
+
+            it?.let {
+                binding.rvTopNurse.adapter = TopNurseAdapter(it)
             }
         }
 

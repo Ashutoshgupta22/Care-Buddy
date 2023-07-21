@@ -74,9 +74,5 @@
             tools:layout_editor_absoluteX="142dp"
             tools:layout_editor_absoluteY="185dp" />
 
-
     </com.google.android.material.card.MaterialCardView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

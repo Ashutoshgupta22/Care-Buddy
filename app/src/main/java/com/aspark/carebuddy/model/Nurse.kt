@@ -13,8 +13,8 @@ class Nurse {
     var userRole : String? = null
     var biography: String = ""
     var specialitiesList = arrayListOf<String>()
-    var ratings: Double = 0.0
+    var rating: Double = 0.0
     var patientNo: Int = 0
     var experience: Int = 0
-
+    var imageUrl: String = ""
 }

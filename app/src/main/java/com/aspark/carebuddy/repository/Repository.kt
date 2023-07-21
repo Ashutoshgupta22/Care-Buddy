@@ -9,12 +9,9 @@ import com.aspark.carebuddy.retrofit.HttpStatusCode
 import com.aspark.carebuddy.retrofit.request.BookServiceRequest
 import com.aspark.carebuddy.retrofit.request.LocationData
 import com.aspark.carebuddy.retrofit.request.LoginRequest
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 import javax.inject.Inject
 
 class Repository @Inject constructor( private val userApi: UserApi) {
@@ -194,7 +191,7 @@ class Repository @Inject constructor( private val userApi: UserApi) {
             })
     }
 
-    fun getUserdata(email: String, callback: (HttpStatusCode) -> Unit) {
+    fun getUserData(email: String, callback: (HttpStatusCode) -> Unit) {
 
         userApi
             .getUserData(email)
@@ -218,6 +215,43 @@ class Repository @Inject constructor( private val userApi: UserApi) {
 
                     Log.e("Repository", "onFailure: getUserdata failed", t)
                     callback(HttpStatusCode.FAILED)
+                }
+            })
+    }
+
+    fun getTopNurses(pincode: String, callback: (ArrayList<Nurse>) -> Unit ) {
+
+        userApi
+            .getTopNurses(pincode)
+            .enqueue(object : Callback<ArrayList<Nurse>> {
+
+                override fun onResponse(
+                    call: Call<ArrayList<Nurse>>,
+                    response: Response<ArrayList<Nurse>>
+                ) {
+
+                    if (response.isSuccessful) {
+
+                        if(response.body() != null)
+                            callback(response.body()!!)
+
+                        else {
+                            Log.e("Repository", "onResponse: getTopNurses response " +
+                                    "body is null")
+                            callback(arrayListOf())
+                        }
+                    }
+                    else {
+                        Log.e("Repository", "onResponse: getTopNurses response " +
+                                "unsuccessful")
+                        callback(arrayListOf())
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<Nurse>>, t: Throwable) {
+
+                    callback(arrayListOf())
+                    Log.e("Repository", "onResponse: getTopNurses response unsuccessful ")
                 }
             })
     }

@@ -32,4 +32,7 @@ interface UserApi {
     @POST("/api/user/book-service")
     fun bookService(@Body request: BookServiceRequest): Call<Nurse>
 
+    @GET("/api/user/get-top-nurses/{pincode}")
+    fun getTopNurses(@Path(value = "pincode") pincode: String ): Call<ArrayList<Nurse>>
+
 }
