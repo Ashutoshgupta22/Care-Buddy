@@ -26,7 +26,7 @@ class AccountFrag: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.tvAccountName.text = currentUser.name
+        binding.tvAccountName.text = "${currentUser.firstName} ${currentUser.lastName}"
 
         binding.rvAccountSetting.apply {
 

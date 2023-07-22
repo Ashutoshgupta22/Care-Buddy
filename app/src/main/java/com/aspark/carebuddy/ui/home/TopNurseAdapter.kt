@@ -52,7 +52,7 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.tvNurseName.text = nurseList[position].name
+        holder.tvNurseName.text = "${nurseList[position].firstName} ${nurseList[position].lastName}"
         holder.tvNurseRating.text = nurseList[position].rating.toString()
 
         holder.rvServiceTags.apply {

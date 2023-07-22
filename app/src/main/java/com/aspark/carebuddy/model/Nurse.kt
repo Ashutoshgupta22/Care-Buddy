@@ -3,7 +3,8 @@ package com.aspark.carebuddy.model
 class Nurse {
 
     var id =  0
-    var name: String = ""
+    var firstName: String = ""
+    var lastName: String = ""
     var age = 0
     var email: String = ""
     var pincode: String = ""

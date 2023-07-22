@@ -60,7 +60,7 @@ class HomeFrag: Fragment() {
                     Log.d("HomeFrag", "onViewCreated: updating user data ui")
                     Log.i("HomeFrag", "onViewCreated: currentUser: $currentUser")
 
-                    binding.tvName.text = currentUser.name
+                    binding.tvName.text = currentUser.firstName
                 }
             }
         }

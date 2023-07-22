@@ -18,7 +18,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel: SignUpViewModel by viewModels()
 
-    private var sName: String? = null
+    private var sFirstName: String? = null
     var sAge: String? = null
     var sEmail: String? = null
     var sPassword: String? = null
@@ -52,7 +52,7 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.userSignUpBtn.setOnClickListener {
 
-            sName = binding.userSignUpName.text.toString().trim()
+            sFirstName = binding.userSignUpName.text.toString().trim()
             sAge = binding.userSignUpAge.text.toString().trim()
             sEmail = binding.userSignUpEmail.text.toString().trim()
             sPassword = binding.userSignUpPassword.text.toString().trim()
@@ -60,10 +60,10 @@ class SignUpActivity : AppCompatActivity() {
 
             validInput = true
 
-            if (verifyInput(sName!!, sAge!!, sEmail!!, sPassword!!, sConfirmPassword!!)) {
+            if (verifyInput(sFirstName!!, sAge!!, sEmail!!, sPassword!!, sConfirmPassword!!)) {
 
                 val user = currentUser
-                user.name = sName
+                user.firstName = sFirstName
                 user.age = sAge!!.toInt()
                 user.email = sEmail
                 user.password = sPassword
@@ -81,10 +81,10 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun verifyInput(
-        sName: String, sAge: String, sEmail: String,
+        sFirstName: String, sAge: String, sEmail: String,
         sPassword: String, sConfirmPassword: String): Boolean {
 
-        if (sName == "") {
+        if (sFirstName == "") {
             binding.userSignUpName.error = "Name can not be empty"
             validInput = false
         }
