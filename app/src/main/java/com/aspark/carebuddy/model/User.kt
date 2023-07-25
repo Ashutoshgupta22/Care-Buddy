@@ -19,7 +19,8 @@ class User private constructor() {
     }
 
     override fun toString(): String {
-        return "User(id=$id, firstName=$firstName, age=$age, latitude=$latitude, longitude=$longitude," +
+        return "User(id=$id, firstName=$firstName, age=$age, latitude=$latitude, " +
+                "longitude=$longitude," +
                 " email=$email, password=$password, " +
                 "firebaseToken=$firebaseToken, pincode='$pincode')"
     }

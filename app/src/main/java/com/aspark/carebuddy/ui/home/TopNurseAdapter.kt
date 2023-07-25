@@ -23,6 +23,7 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
         val ivNursePic = binding.ivTopNursePic
         val tvNurseName = binding.tvTopNurseName
         val tvNurseRating = binding.tvRating
+        val tvNurseQualifications = binding.tvTopNurseQualification
         val rvServiceTags = binding.rvTopNurseServices
         val cvTopNurse = binding.cvTopNurses
 
@@ -54,13 +55,15 @@ class TopNurseAdapter(private val nurseList: ArrayList<Nurse>):
 
         holder.tvNurseName.text = "${nurseList[position].firstName} ${nurseList[position].lastName}"
         holder.tvNurseRating.text = nurseList[position].rating.toString()
+        holder.tvNurseQualifications.text = nurseList[position].qualifications
 
         holder.rvServiceTags.apply {
-           val flexboxLayoutManager = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP)
-                flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
+            val flexboxLayoutManager = FlexboxLayoutManager(context, FlexDirection.ROW,
+                FlexWrap.WRAP)
+            flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
 
             layoutManager = flexboxLayoutManager
-            adapter = NurseServiceTagAdapter(arrayListOf("Baby care","Alzheimer's","Post Surgery"))
+            adapter = NurseServiceTagAdapter(nurseList[position].specialities)
         }
     }
 
