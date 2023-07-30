@@ -1,5 +1,6 @@
 package com.aspark.carebuddy.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.FragmentHomeBinding
 import com.aspark.carebuddy.model.User.Companion.currentUser
+import com.aspark.carebuddy.ui.SecondActivity
 
 class HomeFrag: Fragment() {
 
@@ -28,6 +31,8 @@ class HomeFrag: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val navController = findNavController()
 
         Log.d("HomeFrag", "onViewCreated: called ")
 
@@ -68,7 +73,17 @@ class HomeFrag: Fragment() {
         viewModel.topNurseList.observe(viewLifecycleOwner) {
 
             it?.let {
-                binding.rvTopNurse.adapter = TopNurseAdapter(it)
+                binding.rvTopNurse.adapter = TopNurseAdapter(it) {
+
+//                    val action = HomeFragDirections.actionHomeFragToSecondActivity(it)
+//                    navController.navigate(action)
+
+                    Log.i("HomeFrag", "onViewCreated: onItemClick callback ")
+                    val intent = Intent(requireContext(), SecondActivity::class.java)
+                    intent.putExtra("nurseId",it)
+                    startActivity(intent)
+
+                }
             }
         }
 

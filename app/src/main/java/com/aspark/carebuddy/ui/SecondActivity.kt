@@ -9,7 +9,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivitySecondBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SecondActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySecondBinding
@@ -26,7 +28,6 @@ class SecondActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(arraySetOf(),
             fallbackOnNavigateUpListener = ::onSupportNavigateUp)
         binding.toolbarDetailFrag.setupWithNavController(navController, appBarConfiguration)
-
 
     }
 }

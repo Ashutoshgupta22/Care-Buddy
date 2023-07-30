@@ -1,6 +1,7 @@
 package com.aspark.carebuddy.repository
 
 import android.util.Log
+import com.aspark.carebuddy.api.NurseApi
 import com.aspark.carebuddy.api.UserApi
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
@@ -14,7 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class Repository @Inject constructor( private val userApi: UserApi) {
+class Repository @Inject constructor( private val userApi: UserApi,
+                                      private val nurseApi: NurseApi) {
 
 
     fun bookService() {
@@ -253,6 +255,31 @@ class Repository @Inject constructor( private val userApi: UserApi) {
                     callback(arrayListOf())
                     Log.e("Repository", "onResponse: getTopNurses response unsuccessful ")
                 }
+            })
+    }
+
+    fun getNurseById(id: Int, callback: (HttpStatusCode, Nurse?) -> Unit) {
+
+        nurseApi
+            .getNurseById(id)
+            .enqueue(object : Callback<Nurse> {
+                override fun onResponse(call: Call<Nurse>, response: Response<Nurse>) {
+
+                    if (response.isSuccessful && response.body() != null) {
+
+                        callback(HttpStatusCode.OK, response.body())
+                    }
+                    else {
+                        Log.e("Repository", "onResponse: getNurseById Unsuccessful" )
+                        callback(HttpStatusCode.FAILED, null)
+                    }
+                }
+
+                override fun onFailure(call: Call<Nurse>, t: Throwable) {
+                    Log.e("Repository", "onFailure: getNurseById Failed", t )
+                    callback(HttpStatusCode.FAILED, null)
+                }
+
             })
     }
 }

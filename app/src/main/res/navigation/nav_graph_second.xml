@@ -10,4 +10,5 @@
         android:name="com.aspark.carebuddy.ui.detail.DetailFrag"
         android:label="Nurse Detail"
         tools:layout="@layout/fragment_detail" />
+
 </navigation>

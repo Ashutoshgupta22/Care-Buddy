@@ -11,7 +11,9 @@
         android:label="HomeFrag" >
         <action
             android:id="@+id/action_homeFrag_to_secondActivity"
-            app:destination="@id/secondActivity" />
+            app:destination="@id/secondActivity">
+
+        </action>
     </fragment>
 
     <fragment

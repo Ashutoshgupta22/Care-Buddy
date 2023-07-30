@@ -7,24 +7,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.FragmentDetailBinding
+import com.aspark.carebuddy.model.Nurse
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
+@AndroidEntryPoint
 class DetailFrag : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,21 +46,23 @@ class DetailFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.rvSpecialitiesNurse.apply {
+        val nurseId = activity?.intent?.getIntExtra("nurseId",-1)
 
-            val flexLayout = FlexboxLayoutManager(this@DetailFrag.requireContext(),
-                FlexDirection.ROW, FlexWrap.WRAP)
-            flexLayout.justifyContent = JustifyContent.SPACE_EVENLY
+        nurseId?.let {
 
-            layoutManager = flexLayout
-            adapter = SpecialitiesAdapter(arrayListOf("Post Surgery", "Baby care", "Elder care"))
+            if (nurseId == -1 )
+                Toast.makeText(requireContext(), "Couldn't load data",
+                    Toast.LENGTH_SHORT).show()
+
+            else viewModel.getNurseById(it)
         }
 
-        binding.rvTimeDetail.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            adapter = TimeDetailAdapter(arrayListOf())
-        }
+        viewModel.getNurse.observe(viewLifecycleOwner) {
 
+            it?.let {
+                setUi(it)
+            }
+        }
 
         val calendar = Calendar.getInstance()
         var dayMonth = calendar.get(Calendar.DAY_OF_MONTH)
@@ -82,8 +92,30 @@ class DetailFrag : Fragment() {
         }
     }
 
-    private fun formatDate(day: Int, month: Int, year: Int): String {
+    private fun setUi(it: Nurse) {
 
+        binding.tvDetailName.text = "${it.firstName} ${it.lastName}"
+        binding.tvRating.text = it.rating.toString()
+        binding.tvBiographyNurse.text = it.biography
+
+        binding.rvSpecialitiesNurse.apply {
+
+            val flexLayout = FlexboxLayoutManager(this@DetailFrag.requireContext(),
+                FlexDirection.ROW, FlexWrap.WRAP)
+            flexLayout.justifyContent = JustifyContent.SPACE_EVENLY
+
+            layoutManager = flexLayout
+            adapter = SpecialitiesAdapter(it.specialities)
+        }
+
+        binding.rvTimeDetail.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            adapter = TimeDetailAdapter(arrayListOf())
+        }
+
+    }
+
+    private fun formatDate(day: Int, month: Int, year: Int): String {
 
         var sDay: String = day.toString()
         var sMonth: String = month.toString()
