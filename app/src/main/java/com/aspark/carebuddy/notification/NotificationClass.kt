@@ -45,12 +45,8 @@ open class NotificationClass( @ActivityContext private val context: Context) {
         }
         catch (e: SecurityException) {
             Log.e("NotificationClass", "registerNotificationChannel: " +
-                    "Notification permission not granted",e
-            )
+                    "Notification permission not granted",e)
 
         }
-
-
-
     }
 }

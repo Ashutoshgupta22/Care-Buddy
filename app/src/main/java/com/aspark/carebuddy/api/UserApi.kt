@@ -2,7 +2,7 @@ package com.aspark.carebuddy.api
 
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
-import com.aspark.carebuddy.retrofit.request.BookServiceRequest
+import com.aspark.carebuddy.retrofit.request.BookAppointmentRequest
 import com.aspark.carebuddy.retrofit.request.LocationData
 import com.aspark.carebuddy.retrofit.request.LoginRequest
 import retrofit2.Call
@@ -29,8 +29,8 @@ interface UserApi {
     @GET("/api/user/get-user/{email}")
     fun getUserData(@Path(value = "email") email: String): Call<User>
 
-    @POST("/api/user/book-service")
-    fun bookService(@Body request: BookServiceRequest): Call<Nurse>
+    @POST("/api/user/book-appointment")
+    fun bookAppointment(@Body request: BookAppointmentRequest): Call<Nurse>
 
     @GET("/api/user/get-top-nurses/{pincode}")
     fun getTopNurses(@Path(value = "pincode") pincode: String ): Call<ArrayList<Nurse>>

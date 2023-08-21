@@ -7,7 +7,7 @@ import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.retrofit.HttpStatusCode
-import com.aspark.carebuddy.retrofit.request.BookServiceRequest
+import com.aspark.carebuddy.retrofit.request.BookAppointmentRequest
 import com.aspark.carebuddy.retrofit.request.LocationData
 import com.aspark.carebuddy.retrofit.request.LoginRequest
 import retrofit2.Call
@@ -19,30 +19,30 @@ class Repository @Inject constructor( private val userApi: UserApi,
                                       private val nurseApi: NurseApi) {
 
 
-    fun bookService() {
+    fun bookAppointment(nurseId: Int) {
 
-         val userEmail = currentUser.email
-         val request = BookServiceRequest(userEmail!!)
+         val userEmail = currentUser.email!!
+         val request = BookAppointmentRequest(userEmail, nurseId)
 
-         Log.d("Repository", "bookService: " +
+         Log.d("Repository", "bookAppointment: " +
                  "Calling backend for  $userEmail")
 
-        userApi.bookService(request)
+        userApi.bookAppointment(request)
             .enqueue(object : Callback<Nurse?> {
 
                 override fun onResponse(call: Call<Nurse?>, response: Response<Nurse?>) {
 
                     if (response.isSuccessful && response.body() != null) {
 
-                        Log.d("Repository", "onResponse: book service success")
+                        Log.d("Repository", "onResponse: book appointment success")
                     } else
-                        Log.e("Repository", "onResponse: Book service Unsuccessful: "
+                        Log.e("Repository", "onResponse: Book appointment Unsuccessful: "
                                 +response.body())
                 }
 
                 override fun onFailure(call: Call<Nurse?>, t: Throwable) {
 
-                    Log.e("Repository", "onFailure: Book service Failed",t )
+                    Log.e("Repository", "onFailure: Book appointment Failed",t )
                 }
             })
     }

@@ -33,6 +33,7 @@ class DetailFrag : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModels()
+    private var nurseFirebaseToken: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +47,7 @@ class DetailFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val nurseId = activity?.intent?.getIntExtra("nurseId",-1)
+        val nurseId = activity?.intent?.getIntExtra("nurseId",-1)!!
 
         nurseId?.let {
 
@@ -61,8 +62,11 @@ class DetailFrag : Fragment() {
 
             it?.let {
                 setUi(it)
+                nurseFirebaseToken = it.firebaseToken
             }
         }
+
+        binding.btnBookAppointment.isEnabled = false
 
         val calendar = Calendar.getInstance()
         var dayMonth = calendar.get(Calendar.DAY_OF_MONTH)
@@ -80,6 +84,8 @@ class DetailFrag : Fragment() {
                     binding.tvDate.text = formatDate(selectedDayOfMonth,
                         selectedMonth+1, selectedYear)
 
+                    binding.btnBookAppointment.isEnabled = true
+
                     dayMonth = selectedDayOfMonth
                     month = selectedMonth
                     year = selectedYear
@@ -88,6 +94,14 @@ class DetailFrag : Fragment() {
 
             datePickerDialog.datePicker.minDate = System.currentTimeMillis()
             datePickerDialog.show()
+
+        }
+
+        binding.btnBookAppointment.setOnClickListener {
+
+            if (nurseFirebaseToken.isNotEmpty() && nurseId != -1) {
+                viewModel.bookAppointment(nurseId, nurseFirebaseToken)
+            }
 
         }
     }
@@ -112,7 +126,6 @@ class DetailFrag : Fragment() {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             adapter = TimeDetailAdapter(arrayListOf())
         }
-
     }
 
     private fun formatDate(day: Int, month: Int, year: Int): String {

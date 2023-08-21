@@ -35,4 +35,14 @@ class DetailViewModel @Inject constructor( private val repo: Repository) : ViewM
         }
     }
 
+    fun bookAppointment(nurseId: Int, nurseFirebaseToken: String) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            repo.bookAppointment(nurseId)
+        }
+
+
+    }
+
 }
