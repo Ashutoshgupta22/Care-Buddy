@@ -22,9 +22,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="false"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.CareBuddy" />
+        <activity
             android:name=".ui.SecondActivity"
-            android:parentActivityName=".ui.home.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.home.MainActivity" />
 
         <service
             android:name=".notification.FirebaseNotificationService"
@@ -42,7 +47,7 @@
             android:name=".map.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

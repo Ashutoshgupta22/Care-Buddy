@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/chatFrag"
-        android:name="com.aspark.carebuddy.ui.chat.ChatFrag"
+        android:name="com.aspark.carebuddy.ui.chat.ChatListFragment"
         android:label="ChatFrag" />
     <fragment
         android:id="@+id/notificationFrag"

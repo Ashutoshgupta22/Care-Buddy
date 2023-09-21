@@ -109,7 +109,7 @@ class Repository @Inject constructor( private val userApi: UserApi,
                     if (response.isSuccessful && response.body() != null) {
 
                         Log.i("Repository", "Welcome Back!")
-                        User.currentUser = response.body()!!
+                        currentUser = response.body()!!
 
                         Log.i("Repository", "onResponse: " +
                                 "current user email ${currentUser.email}")

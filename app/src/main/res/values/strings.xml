@@ -22,4 +22,5 @@
     <string name="top_nurses_near_you">Top nurses near you</string>
     <string name="self_care">Self Care</string>
     <string name="hello">Hello!</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>

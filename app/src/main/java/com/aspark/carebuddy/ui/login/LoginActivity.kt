@@ -12,7 +12,7 @@ import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityLoginBinding
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.ui.signup.SignUpActivity
-import com.aspark.carebuddy.ui.home.HomeActivity
+import com.aspark.carebuddy.ui.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
             User.currentUser.email = userEmail
 
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
 
@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.callActivity.observe(this) {
 
             val intent =
-                Intent(this, HomeActivity::class.java)
+                Intent(this, MainActivity::class.java)
             //destroys all previous tasks
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -19,7 +19,7 @@ import com.aspark.carebuddy.model.User.Companion.currentUser
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModels()
