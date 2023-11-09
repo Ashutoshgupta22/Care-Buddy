@@ -45,11 +45,11 @@ class HomeViewModel @Inject constructor( private val repo: Repository) : ViewMod
         }
     }
 
-    private fun getTopNurses(pincode: String) {
+    private fun getTopNurses(pincode: String?) {
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            repo.getTopNurses(pincode) {
+            repo.getTopNurses("560037") {
 
                 mTopNursesList.postValue(it)
             }

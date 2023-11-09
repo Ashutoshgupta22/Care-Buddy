@@ -56,8 +56,8 @@ import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.ui.chat.ui.theme.CareBuddyTheme
 import kotlinx.coroutines.launch
 
-// Using List instead of ArrayList because list is immutable
-//arrayList is mutable which causes problem with recomposition
+/** Using List instead of ArrayList, because list is immutable
+arrayList is mutable which causes problem with recomposition **/
 
 @Composable
 fun ChatScreen(
@@ -74,12 +74,12 @@ fun ChatScreen(
         Messages( Modifier.weight(1f), messageList, listState)
 
         LaunchedEffect(key1 = null) {
-            //scroll to bottom when screen is visible
+
+            /** scroll to bottom when screen is visible **/
             coroutineScope.launch {
                 listState.scrollToItem(messageList.lastIndex)
             }
         }
-
 
         InputCard {
             onSendClick(it)

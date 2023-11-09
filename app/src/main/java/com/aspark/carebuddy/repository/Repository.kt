@@ -49,6 +49,7 @@ class Repository @Inject constructor( private val userApi: UserApi,
 
     fun signUp(user: User, callback: (HttpStatusCode) -> Unit) {
 
+        user.pincode = "560037"
         userApi.signUp(user)
             .enqueue(object : Callback<Boolean> {
 
@@ -64,27 +65,11 @@ class Repository @Inject constructor( private val userApi: UserApi,
 
                     } else {
 
-//                        try {
-//                            assert(response.errorBody() != null)
-//                            val errorBody = response.errorBody()!!.string()
-//                            val jsonObject = JSONObject(errorBody.trim { it <= ' ' })
-//                            val errorMessage = jsonObject.getString("message")
-//                            Log.w("TAG", "onResponse: Response Code=" + response.code())
-//                            Log.w("TAG", "onResponse: Response Msg=$errorMessage")
-//
-//                            if (response.code() == 403) {
-//                                //TODO show below toast
-//                                // Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-//                            }
-//                        } catch (e: IOException) {
-//                            e.printStackTrace()
-//                        } catch (e: JSONException) {
-//                            e.printStackTrace()
-//                        }
+                        Log.e("Repository", "onResponse: Signup response " +
+                                "unsuccessful ${response.code()}")
+
                         if ( response.code() == HttpStatusCode.FORBIDDEN.code)
                             Log.e("Repository", "onResponse: FORBIDDEN ")
-
-
                     }
                 }
 

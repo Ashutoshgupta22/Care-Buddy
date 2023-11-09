@@ -7,7 +7,7 @@ class Nurse {
     var lastName: String = ""
     var age = 0
     var email: String = ""
-    var pincode: String = ""
+    var pincode: String? = ""
     var firebaseToken: String = ""
     var latitude = 0.0
     var longitude = 0.0
