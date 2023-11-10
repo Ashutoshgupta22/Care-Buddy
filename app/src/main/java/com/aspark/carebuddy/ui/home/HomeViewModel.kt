@@ -5,18 +5,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aspark.carebuddy.chat.StanzaLoggingListener
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.repository.Repository
 import com.aspark.carebuddy.retrofit.HttpStatusCode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jivesoftware.smack.tcp.XMPPTCPConnection
 
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor( private val repo: Repository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repo: Repository,
+    private val connection: XMPPTCPConnection
+) : ViewModel() {
 
     private var mGetUserdataSuccess = MutableLiveData<Boolean>()
     val getUserdata: LiveData<Boolean> = mGetUserdataSuccess
@@ -32,9 +38,9 @@ class HomeViewModel @Inject constructor( private val repo: Repository) : ViewMod
 
             repo.getUserData(email) {
 
-                when(it) {
+                when (it) {
 
-                    HttpStatusCode.OK ->  {
+                    HttpStatusCode.OK -> {
                         mGetUserdataSuccess.postValue(true)
                         getTopNurses(User.currentUser.pincode)
                     }
@@ -59,4 +65,12 @@ class HomeViewModel @Inject constructor( private val repo: Repository) : ViewMod
     fun getSelfCare() {
     }
 
+    fun connectXMPP() {
+
+        GlobalScope.launch {
+            connection.connect().login()
+            connection.addStanzaListener(StanzaLoggingListener(), null)
+            Log.i("Module", "provideXMPPTCPConnection: chat connected")
+        }
+    }
 }

@@ -1,9 +1,7 @@
 package com.aspark.carebuddy.ui.chat
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,7 +33,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -46,8 +43,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,11 +56,11 @@ arrayList is mutable which causes problem with recomposition **/
 
 @Composable
 fun ChatScreen(
-    nurse: Nurse, messages: List<Message>,
+    nurse: Nurse, messageData: List<MessageData>,
     onUpBtnClick: () -> Unit,
-    onSendClick: (Message) -> Unit) {
+    onSendClick: (MessageData) -> Unit) {
 
-    var messageList by rememberSaveable { mutableStateOf(messages) }
+    var messageList by rememberSaveable { mutableStateOf(messageData) }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -146,14 +141,14 @@ fun ChatActionBar(nurse: Nurse, onUpBtnClick: () -> Unit) {
 
 @Composable
 private fun Messages(
-    modifier: Modifier, messageList: List<Message>,
+    modifier: Modifier, messageDataList: List<MessageData>,
     listState: LazyListState) {
 
     LazyColumn(state = listState,
         modifier = modifier
             .fillMaxSize()
     ) {
-        items(messageList) { message ->
+        items(messageDataList) { message ->
 
             if (message.sentByMe){
 
@@ -163,7 +158,7 @@ private fun Messages(
                         .fillMaxWidth()
                         .wrapContentHeight()
                     ) {
-                    MyMessageCard(message = message)
+                    MyMessageCard(messageData = message)
 
                 }
             }
@@ -185,7 +180,7 @@ private fun Messages(
 
 
 @Composable
-fun OtherMessageCard(message: Message) {
+fun OtherMessageCard(messageData: MessageData) {
 
     Surface(color  = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(topStart = 4.dp, topEnd = 18.dp,
@@ -193,7 +188,7 @@ fun OtherMessageCard(message: Message) {
         modifier = Modifier
             .padding(8.dp)) {
 
-        Text(text = message.content,
+        Text(text = messageData.content,
             fontSize = 15.sp,
             style = TextStyle(color = Color.Black),
             modifier = Modifier
@@ -203,7 +198,7 @@ fun OtherMessageCard(message: Message) {
 }
 
 @Composable
-fun MyMessageCard(message: Message) {
+fun MyMessageCard(messageData: MessageData) {
 
     Surface(color  = MaterialTheme.colorScheme.tertiaryContainer,
         shape = RoundedCornerShape(topStart = 18.dp, topEnd = 4.dp,
@@ -211,7 +206,7 @@ fun MyMessageCard(message: Message) {
         modifier = Modifier
             .padding(8.dp)) {
 
-        Text(text = message.content,
+        Text(text = messageData.content,
             fontSize = 15.sp,
             style = TextStyle(color = Color.Black),
             modifier = Modifier
@@ -221,7 +216,7 @@ fun MyMessageCard(message: Message) {
 }
 
 @Composable
-fun InputCard(onSendClick: (Message) -> Unit) {
+fun InputCard(onSendClick: (MessageData) -> Unit) {
 
     var message by rememberSaveable { mutableStateOf("") }
 
@@ -248,7 +243,7 @@ fun InputCard(onSendClick: (Message) -> Unit) {
         IconButton(onClick = {
 
             if (message.isNotBlank()) {
-                onSendClick( Message(message.trim(),true,"") )
+                onSendClick( MessageData(message.trim(),true,"") )
                 message = ""
             }
 
@@ -289,18 +284,18 @@ fun PreviewChatScreen() {
         "How are you doing ", "Thanks for asking",
         "DO NOT TEXT ME")
 
-    val messagesList = arrayListOf<Message>()
+    val messagesList = arrayListOf<MessageData>()
 
     for ((count,i) in list.withIndex()) {
 
         val c = count %2==0
-        messagesList.add(Message(i, c,""))
+        messagesList.add(MessageData(i, c,""))
 
     }
 
     CareBuddyTheme {
         ChatScreen(
-            nurse = nurse, messages = messagesList,
+            nurse = nurse, messageData = messagesList,
             onUpBtnClick = {}) {}
     }
 }

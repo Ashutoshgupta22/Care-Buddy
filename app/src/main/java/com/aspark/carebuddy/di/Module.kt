@@ -10,22 +10,23 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.WebSocketListener
+import org.jivesoftware.smack.ConnectionConfiguration
+import org.jivesoftware.smack.tcp.XMPPTCPConnection
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import retrofit2.Retrofit
-import retrofit2.create
 
 @InstallIn(SingletonComponent::class)
 @Module
 object Module {
 
     @Provides
-    fun provideRetrofit() : Retrofit {
+    fun provideRetrofit(): Retrofit {
         return RetrofitService.retrofit
     }
 
     @Provides
     fun provideUserApi(retrofit: Retrofit): UserApi {
-        return retrofit.create( UserApi::class.java)
+        return retrofit.create(UserApi::class.java)
     }
 
     @Provides
@@ -34,7 +35,7 @@ object Module {
     }
 
     @Provides
-    fun provideRepository( userApi: UserApi, nurseApi: NurseApi) : Repository {
+    fun provideRepository(userApi: UserApi, nurseApi: NurseApi): Repository {
         return Repository(userApi, nurseApi)
     }
 
@@ -48,4 +49,24 @@ object Module {
         return MyWebSocketListener()
     }
 
-}
+    @Provides
+    fun provideXMPPTCPConnectionConfiguration(retrofit: Retrofit): XMPPTCPConnectionConfiguration {
+
+        return XMPPTCPConnectionConfiguration.builder()
+            .setUsernameAndPassword("user1", "user1")
+            .setXmppDomain("aspark-care-buddy.ap-south-1.elasticbeanstalk.com")
+            .setHost("192.168.1.6")
+            .setConnectTimeout(5000)
+            .setPort(5222)
+            .setSecurityMode(ConnectionConfiguration.SecurityMode.ifpossible)
+            .build()
+    }
+
+    @Provides
+    fun provideXMPPTCPConnection(
+        configuration: XMPPTCPConnectionConfiguration
+    ): XMPPTCPConnection {
+
+        return XMPPTCPConnection(configuration)
+    }
+ }

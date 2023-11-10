@@ -1,7 +1,6 @@
 package com.aspark.carebuddy.ui.chat
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -35,13 +34,11 @@ class ChatActivity : ComponentActivity() {
             "How are you doing ", "Thanks for asking",
             "DO NOT TEXT ME")
 
-        val messagesList = arrayListOf<Message>()
+        val messagesList = arrayListOf<MessageData>()
 
         for ((count,i) in list.withIndex()) {
-
             val c = count %2==0
-            messagesList.add(Message(i, c,""))
-
+            messagesList.add(MessageData(i, c,""))
         }
 
         val nurse = Nurse()
@@ -55,7 +52,7 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ChatScreen(nurse = nurse, messages = messagesList,{
+                    ChatScreen(nurse = nurse, messageData = messagesList,{
                         finish()
                     }) {
 
