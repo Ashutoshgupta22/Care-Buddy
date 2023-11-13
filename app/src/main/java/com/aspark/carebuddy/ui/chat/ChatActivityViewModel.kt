@@ -2,14 +2,11 @@ package com.aspark.carebuddy.ui.chat
 
 import androidx.lifecycle.ViewModel
 import com.aspark.carebuddy.chat.ChatMessage
-import com.aspark.carebuddy.websocket.MyWebSocketListener
-import com.aspark.carebuddy.websocket.WebSocketService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +33,4 @@ class ChatActivityViewModel @Inject constructor(
                 chatMessage.sendMessage(messageData)
             }
         }
-
-
-}
+    }

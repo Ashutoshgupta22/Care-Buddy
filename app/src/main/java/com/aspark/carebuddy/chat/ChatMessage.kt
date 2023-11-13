@@ -11,12 +11,17 @@ class ChatMessage @Inject constructor(private val  connection: XMPPTCPConnection
 
     fun sendMessage(messageData: MessageData) {
 
-        val chatManager = ChatManager.getInstanceFor(connection)
-        val jid = JidCreate.entityBareFrom("user2@aspark-care-buddy.ap-south-1.elasticbeanstalk.com")
-        val chat = chatManager.chatWith(jid)
+        if (connection.isConnected) {
+            Log.i("XMPP Connection", "Connection is already established")
 
-        chat.send(messageData.content)
-        Log.i("Message", "sendMessage: Message sent")
+            val chatManager = ChatManager.getInstanceFor(connection)
+            val jid = JidCreate.entityBareFrom("user2@aspark-care-buddy.ap-south-1.elasticbeanstalk.com")
+            val chat = chatManager.chatWith(jid)
 
+            chat.send(messageData.content)
+            Log.i("Message", "sendMessage: Message sent")
+        } else {
+            Log.e("XMPP Connection", "Connection not established $connection")
+        }
     }
 }

@@ -11,6 +11,7 @@ import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.repository.Repository
 import com.aspark.carebuddy.retrofit.HttpStatusCode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,7 +31,6 @@ class HomeViewModel @Inject constructor(
     val topNurseList: LiveData<ArrayList<Nurse>> = mTopNursesList
     private var mShowToast = MutableLiveData<String>()
     val showToast: LiveData<String> = mShowToast
-
 
     fun getUserdata(email: String) {
 
@@ -65,12 +65,13 @@ class HomeViewModel @Inject constructor(
     fun getSelfCare() {
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun connectXMPP() {
 
         GlobalScope.launch {
             connection.connect().login()
             connection.addStanzaListener(StanzaLoggingListener(), null)
-            Log.i("Module", "provideXMPPTCPConnection: chat connected")
+            Log.i("Module", "provideXMPPTCPConnection: chat connected $connection")
         }
     }
 }

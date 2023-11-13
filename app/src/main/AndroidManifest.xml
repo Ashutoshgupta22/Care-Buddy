@@ -29,7 +29,7 @@
         <activity
             android:name=".ui.SecondActivity"
             android:exported="false"
-            android:parentActivityName=".ui.home.MainActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".notification.FirebaseNotificationService"
@@ -47,7 +47,7 @@
             android:name=".map.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.MainActivity"
+            android:name=".MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

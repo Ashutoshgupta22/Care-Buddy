@@ -12,7 +12,7 @@ import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityLoginBinding
 import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.ui.signup.SignUpActivity
-import com.aspark.carebuddy.ui.home.MainActivity
+import com.aspark.carebuddy.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

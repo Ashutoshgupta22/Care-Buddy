@@ -1,4 +1,4 @@
-package com.aspark.carebuddy.ui.home
+package com.aspark.carebuddy
 
 import android.Manifest
 import android.content.Intent
@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.aspark.carebuddy.R
 import com.aspark.carebuddy.databinding.ActivityHomeBinding
 import com.aspark.carebuddy.map.MapActivity
 import com.aspark.carebuddy.model.User.Companion.currentUser
+import com.aspark.carebuddy.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -154,6 +154,4 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
-
-
 }
