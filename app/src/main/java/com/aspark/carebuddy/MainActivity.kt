@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         currentUser.email?.let {
             Log.d("HomeActivity", "onCreate: getting user data ")
             viewModel.getUserdata(it)
-            viewModel.connectXMPP()
+            //viewModel.connectXMPP()
         }
 
         viewModel.getSelfCare()

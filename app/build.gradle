@@ -68,7 +68,6 @@ dependencies {
     implementation 'org.igniterealtime.smack:smack-android:4.4.6'
     implementation 'org.igniterealtime.smack:smack-xmlparser-xpp3:4.4.6'
     implementation 'org.igniterealtime.smack:smack-resolver-dnsjava:4.4.6'
-    //implementation 'org.igniterealtime.smack:smack-java8:4.4.6'
 
     //websocket
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.aspark.carebuddy.chat.StanzaLoggingListener
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User
+import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.repository.Repository
 import com.aspark.carebuddy.retrofit.HttpStatusCode
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +43,8 @@ class HomeViewModel @Inject constructor(
 
                     HttpStatusCode.OK -> {
                         mGetUserdataSuccess.postValue(true)
-                        getTopNurses(User.currentUser.pincode)
+                        getTopNurses(currentUser.pincode)
+                        connectXMPP()
                     }
 
                     else -> mShowToast.postValue("Couldn't load data")
@@ -66,10 +68,11 @@ class HomeViewModel @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun connectXMPP() {
+    private fun connectXMPP() {
 
         GlobalScope.launch {
-            connection.connect().login()
+            connection.connect().login("user${currentUser.id}",
+                "user${currentUser.id}")
             connection.addStanzaListener(StanzaLoggingListener(), null)
             Log.i("Module", "provideXMPPTCPConnection: chat connected $connection")
         }
