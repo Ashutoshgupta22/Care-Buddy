@@ -5,12 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aspark.carebuddy.chat.ChatMessage
 import com.aspark.carebuddy.chat.StanzaLoggingListener
 import com.aspark.carebuddy.model.Nurse
-import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.repository.Repository
 import com.aspark.carebuddy.retrofit.HttpStatusCode
+import com.aspark.carebuddy.ui.chat.ChatActivityViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repo: Repository,
-    private val connection: XMPPTCPConnection
+    private val connection: XMPPTCPConnection,
 ) : ViewModel() {
 
     private var mGetUserdataSuccess = MutableLiveData<Boolean>()
@@ -68,13 +69,14 @@ class HomeViewModel @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun connectXMPP() {
+    fun connectXMPP() {
 
         GlobalScope.launch {
             connection.connect().login("user${currentUser.id}",
                 "user${currentUser.id}")
             connection.addStanzaListener(StanzaLoggingListener(), null)
             Log.i("Module", "provideXMPPTCPConnection: chat connected $connection")
+            ChatMessage(connection).receiveMessage()
         }
     }
 }

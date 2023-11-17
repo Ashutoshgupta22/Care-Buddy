@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.aspark.carebuddy.chat.ChatMessage
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.ui.chat.ui.theme.CareBuddyTheme
 import dagger.hilt.android.AndroidEntryPoint
+import org.jivesoftware.smack.tcp.XMPPTCPConnection
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatActivity : ComponentActivity() {
@@ -45,6 +48,8 @@ class ChatActivity : ComponentActivity() {
         nurse.firstName = "John"
         nurse.lastName = "Doe"
 
+        val chatMessage = viewModel.getChatMessage()
+
         setContent {
             CareBuddyTheme {
                 // A surface container using the 'background' color from the theme
@@ -52,9 +57,9 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ChatScreen(nurse = nurse, messageData = messagesList,{
-                        finish()
-                    }) {
+                    ChatScreen(
+                        nurse = nurse, messageData = messagesList,
+                        chatMessage, this ,{ finish() }) {
 
                         viewModel.sendMessage(it)
                     }
