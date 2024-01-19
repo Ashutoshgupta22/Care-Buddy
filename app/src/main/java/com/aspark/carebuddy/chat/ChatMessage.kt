@@ -3,7 +3,6 @@ package com.aspark.carebuddy.chat
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.aspark.carebuddy.ui.chat.ChatActivityViewModel
 import com.aspark.carebuddy.ui.chat.MessageData
 import org.jivesoftware.smack.chat2.ChatManager
 import org.jivesoftware.smack.tcp.XMPPTCPConnection

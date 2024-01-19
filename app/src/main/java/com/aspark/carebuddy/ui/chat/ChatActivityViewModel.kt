@@ -1,8 +1,5 @@
 package com.aspark.carebuddy.ui.chat
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aspark.carebuddy.chat.ChatMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,9 +7,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jivesoftware.smack.chat2.ChatManager
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
-import org.jxmpp.jid.impl.JidCreate
 import javax.inject.Inject
 
 @HiltViewModel

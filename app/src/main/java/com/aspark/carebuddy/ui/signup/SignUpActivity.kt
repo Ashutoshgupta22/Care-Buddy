@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.aspark.carebuddy.databinding.ActivitySignUpBinding
-import com.aspark.carebuddy.ui.login.LoginActivity
 import com.aspark.carebuddy.model.User.Companion.currentUser
+import com.aspark.carebuddy.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.logging.Level
 import java.util.logging.Logger

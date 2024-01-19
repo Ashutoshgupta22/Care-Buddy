@@ -9,8 +9,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.aspark.carebuddy.databinding.ActivityMapBinding
 import com.aspark.carebuddy.MainActivity
+import com.aspark.carebuddy.databinding.ActivityMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer

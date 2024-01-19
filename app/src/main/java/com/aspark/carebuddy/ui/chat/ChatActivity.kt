@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.aspark.carebuddy.chat.ChatMessage
 import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.ui.chat.ui.theme.CareBuddyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import org.jivesoftware.smack.tcp.XMPPTCPConnection
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatActivity : ComponentActivity() {

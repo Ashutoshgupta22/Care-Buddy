@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.ItemAccountSettingBinding
-import com.aspark.carebuddy.model.User
 import com.aspark.carebuddy.ui.login.LoginActivity
 
 class AccountSettingAdapter(private val settingList: ArrayList<String>) :

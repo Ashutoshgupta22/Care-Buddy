@@ -5,14 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aspark.carebuddy.databinding.ItemSelfCareBinding
-import com.aspark.carebuddy.databinding.ItemTopNursesBinding
-import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.SelfCareModel
-import com.bumptech.glide.Glide
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 
 class SelfCareAdapter(private val selfCareList: ArrayList<SelfCareModel>):
     RecyclerView.Adapter<SelfCareAdapter.ViewHolder>() {

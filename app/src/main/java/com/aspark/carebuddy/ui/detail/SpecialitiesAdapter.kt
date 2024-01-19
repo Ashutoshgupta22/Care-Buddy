@@ -3,7 +3,6 @@ package com.aspark.carebuddy.ui.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aspark.carebuddy.databinding.ItemNurseServiceTagBinding
 import com.aspark.carebuddy.databinding.ItemSpecialitiesDetailBinding
 
 class SpecialitiesAdapter(private val specialitiesList: ArrayList<String>):

@@ -11,14 +11,13 @@ import com.aspark.carebuddy.model.Nurse
 import com.aspark.carebuddy.model.User.Companion.currentUser
 import com.aspark.carebuddy.repository.Repository
 import com.aspark.carebuddy.retrofit.HttpStatusCode
-import com.aspark.carebuddy.ui.chat.ChatActivityViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jivesoftware.smack.SmackException
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
-
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,12 +70,19 @@ class HomeViewModel @Inject constructor(
     @OptIn(DelicateCoroutinesApi::class)
     fun connectXMPP() {
 
-        GlobalScope.launch {
-            connection.connect().login("user${currentUser.id}",
-                "user${currentUser.id}")
-            connection.addStanzaListener(StanzaLoggingListener(), null)
-            Log.i("Module", "provideXMPPTCPConnection: chat connected $connection")
-            ChatMessage(connection).receiveMessage()
-        }
+//        try {
+//
+//            GlobalScope.launch {
+//                connection.connect().login(
+//                    "user${currentUser.id}",
+//                    "user${currentUser.id}"
+//                )
+//                connection.addStanzaListener(StanzaLoggingListener(), null)
+//                Log.i("Module", "provideXMPPTCPConnection: chat connected $connection")
+//                ChatMessage(connection).receiveMessage()
+//            }
+//        } catch (e: SmackExcep) {
+//            Log.e("HomeViewModel", "connectXMPP: Couldn't connect with chat server",e )
+//        }
     }
 }
