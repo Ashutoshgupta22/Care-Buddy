@@ -1,6 +1,5 @@
 package com.aspark.carebuddy.ui.chat
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -155,7 +154,8 @@ fun ChatActionBar(nurse: Nurse, onUpBtnClick: () -> Unit) {
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
-                text = "${nurse.firstName} ${nurse.lastName}",
+//                text = "${nurse.firstName} ${nurse.lastName}",
+                text = "Nurse",
                 fontSize = 20.sp
 
             )
