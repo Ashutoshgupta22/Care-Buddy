@@ -22,3 +22,18 @@ It comprises two distinct versions:
   - Firebase Cloud Messaging (FCM) for Push Notifications
   
   - Smack for XMPP Server Connectivity (ejabberd)
+ 
+
+  ## Screen Recording:
+  
+https://github.com/Ashutoshgupta22/Care-Buddy/assets/68068357/a4885f67-892a-4ce4-ba61-8dc6d2f71c31
+  
+ 
+  ## Screenshots:
+
+  ![carebuddy2](https://github.com/Ashutoshgupta22/Care-Buddy/assets/68068357/8ca25036-c1a9-4883-85de-6ff2979228f6)
+
+![careBuddy1](https://github.com/Ashutoshgupta22/Care-Buddy/assets/68068357/5b6c87c4-75c4-40c2-89cc-a6b7f45a2616)
+![carebuddy3](https://github.com/Ashutoshgupta22/Care-Buddy/assets/68068357/5823c1c8-5c6d-421c-bc7b-9eeee14efade)
+![carebuddy4](https://github.com/Ashutoshgupta22/Care-Buddy/assets/68068357/07ca934a-08ab-4fc8-af55-46c6f6733ac9)
+
