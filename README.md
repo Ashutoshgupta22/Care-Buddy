@@ -1,12 +1,14 @@
 # Care-Buddy
 
-**Care Buddy** is a comprehensive Android application suite designed to streamline communication and enhance patient care. 
+**Care Buddy** is a comprehensive Full Stack application suite designed to streamline communication and enhance patient care. 
 
 It comprises two distinct versions:
 
 **User App:** This app provides patients with a user-friendly interface to connect with nurses, view their medical information, and receive updates regarding their care.
 
 **Nurse App:** This app empowers nurses to effectively manage patient communication, access medical records, and collaborate seamlessly with other healthcare professionals.
+
+**Backend:** https://github.com/Ashutoshgupta22/Backend-care-Buddy
 
 
 ## Technical Stack:
